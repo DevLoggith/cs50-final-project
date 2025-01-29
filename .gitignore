@@ -7,6 +7,9 @@ __pycache__/
 *.pyo
 *.pyd
 
+# Ignore the instance folder
+instance/
+
 # Ignore IDE-specific files
 .vscode/
 .idea/
@@ -21,3 +24,10 @@ __pycache__/
 # Ignore SQLite database files
 *.sqlite3
 *.db
+
+# Ignore distribution and build directories
+dist/
+build/
+
+# Ignore egg-info directories
+*.egg-info/
