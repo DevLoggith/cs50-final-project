@@ -17,11 +17,11 @@
 			defer
 		></script>
 		<link rel="stylesheet" href="/static/styles.css" />
-		<title>SkillSift</title>
+		<title>SkillSift: {% block title %}{% endblock %}</title>
 	</head>
 
 	<body>
-		<nav class="navbar bg-body-tertiary">
+		<nav class="navbar navbar-expand-md bg-body-tertiary">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="#">
 					<img
@@ -29,10 +29,30 @@
 						alt="Logo"
 						width="60"
 						height="60"
-						class="d-inline-block align-text-top"
+						id="logo"
+						class="d-inline-block rounded-3"
 					/>
 					SkillSift
 				</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarNavAltMarkup"
+					aria-controls="navbarNavAltMarkup"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav ms-auto">
+						<a class="nav-link active" aria-current="page" href="#">Home</a>
+						<a class="nav-link" href="#">Skills List</a>
+						<a class="nav-link" href="#">Skills Charts</a>
+						<a class="nav-link" href="#">About</a>
+					</div>
+				</div>
 			</div>
 		</nav>
 		<main>{% block main %}{% endblock %}</main>
