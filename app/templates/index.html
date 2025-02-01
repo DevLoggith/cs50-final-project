@@ -1,11 +1,45 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Home
-{% endblock %}
+{% block title %} 
+    Home 
+{% endblock %} 
 
-{% block main %}
-    <h1>Welcome to SkillSift!</h1>
-    <p>This is the home page.</p>
-    <p>Hello Cleveland!</p>
+{% block main%}
+    <div class="container">
+        <div class="card">
+            <div class="card-body text-center">
+                <form>
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <input
+                                autocomplete="off"
+                                autofocus
+                                class="form-control mx-auto w-auto"
+                                name="job_title"
+                                placeholder="Job Title"
+                                type="text"
+                            />
+                        </div>
+                        <div class="input-group mb-3">
+                            <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                id="button-addon1"
+                            >
+                            &#x1F4CD <!-- Unicode for a location icon -->
+                            </button>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Enter a location"
+                                aria-label="Example text with button addon"
+                                aria-describedby="button-addon1"
+                            />
+                        </div>
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
