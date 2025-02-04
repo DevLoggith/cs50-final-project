@@ -1,5 +1,9 @@
 import * as helpers from "./helpers.js";
 
+document
+	.getElementById("location-button")
+	.addEventListener("click", getLocation);
+
 function getLocation() {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition((position) => {
@@ -12,7 +16,3 @@ function getLocation() {
 		console.log("Geolocation is not supported by this browser.");
 	}
 }
-
-document
-	.getElementById("location-button")
-	.addEventListener("click", getLocation);
