@@ -21,9 +21,11 @@ def index():
     return render_template("index.html")
 
 
+# TODO: create /save_location route in order to store a users location data -
+# longitude & latitude - gathered from the geolocation API
+
 # @app.route("/search", methods=["GET", "POST"])
 # def search():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
