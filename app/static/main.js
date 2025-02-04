@@ -9,7 +9,7 @@ function getLocation() {
 		navigator.geolocation.getCurrentPosition((position) => {
 			const latitude = position.coords.latitude;
 			const longitude = position.coords.longitude;
-			console.log(`Longitude: ${longitude} Latitude: ${latitude}`);
+			console.log(`${latitude}, ${longitude}`);
 			helpers.sendLocationToServer(latitude, longitude);
 		}, helpers.handleError);
 	} else {
