@@ -1,0 +1,8 @@
+:root {
+    --main-logo-color: #00cad5;
+}
+
+.btn-primary {
+    background-color: var(--main-logo-color);
+    border-color: var(--main-logo-color);
+}
