@@ -10,34 +10,39 @@
             <div class="card-body text-center">
                 <form>
                     <div class="mb-3">
-                        <div class="mb-3">
-                            <input
-                                autocomplete="off"
-                                autofocus
-                                class="form-control mx-auto w-auto"
-                                name="job_title"
-                                placeholder="Job Title"
-                                type="text"
-                            />
+                        <div class="row">
+                            <div class="col-md-6 mx-auto">
+                                <div class="mb-3">
+                                    <input
+                                        autocomplete="off"
+                                        autofocus
+                                        class="form-control mx-auto w-auto"
+                                        name="job_title"
+                                        placeholder="Job Title"
+                                        type="text"
+                                    />
+                                </div>
+                                <div class="input-group mb-3">
+                                    <button
+                                        class="btn btn-outline-secondary"
+                                        type="button"
+                                        id="location-button"
+                                        title="Use my location"
+                                    >
+                                    &#x1F4CD <!-- Unicode for a location icon -->
+                                    </button>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="location"
+                                        placeholder="Enter a location"
+                                        aria-label="Example text with button addon"
+                                        aria-describedby="button-addon1"
+                                    />
+                                </div>
+                                <button class="btn btn-primary btn-lg" type="submit">Search</button>
+                            </div>
                         </div>
-                        <div class="input-group mb-3">
-                            <button
-                                class="btn btn-outline-secondary"
-                                type="button"
-                                id="location-button"
-                                title="Use my location"
-                            >
-                            &#x1F4CD <!-- Unicode for a location icon -->
-                            </button>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Enter a location"
-                                aria-label="Example text with button addon"
-                                aria-describedby="button-addon1"
-                            />
-                        </div>
-                        <button class="btn btn-primary" type="submit">Search</button>
                     </div>
                 </form>
             </div>
