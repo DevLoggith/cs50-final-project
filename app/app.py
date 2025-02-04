@@ -23,3 +23,7 @@ def index():
 
 # @app.route("/search", methods=["GET", "POST"])
 # def search():
+
+if __name__ == "__main__":
+    app.run(debug=True)
+    
