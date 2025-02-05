@@ -15,21 +15,20 @@ function handleError(error) {
 	}
 }
 
-function sendLocationToServer(latitude, longitude) {
-	fetch("/save_location", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ latitude: latitude, longitude: longitude }),
-	})
-		.then((response) => response.json())
-		.then((data) => {
-			console.log("location saved:", data);
-		})
-		.catch((error) => {
-			console.error("Error:", error);
+async function sendLocationToServer(latitude, longitude) {
+	try {
+		const response = await fetch("/save_location", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ latitude: latitude, longitude: longitude }),
 		});
+		const data = await response.json();
+		console.log("location saved:", data);
+	} catch (error) {
+		console.log("Error: ", error);
+	}
 }
 
 export { handleError, sendLocationToServer };
