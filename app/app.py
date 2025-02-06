@@ -1,10 +1,7 @@
 import os
-from cs50 import SQL
 from flask import Flask, redirect, render_template, request, jsonify
 
 app = Flask(__name__)
-
-db = SQL("sqlite:///data/skillsift.db")
 
 @app.after_request
 def after_request(response):

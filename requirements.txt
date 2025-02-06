@@ -1,6 +1,5 @@
 blinker==1.9.0
 click==8.1.8
-cs50==9.4.0
 Flask==3.1.0
 greenlet==3.1.1
 itsdangerous==2.2.0

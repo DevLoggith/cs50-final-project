@@ -21,10 +21,6 @@ instance/
 *.swp
 *.log
 
-# Ignore SQLite database files
-*.sqlite3
-*.db
-
 # Ignore distribution and build directories
 dist/
 build/
