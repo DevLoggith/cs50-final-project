@@ -8,13 +8,28 @@ function getLocation() {
 			const latitude = position.coords.latitude;
 			const longitude = position.coords.longitude;
 			console.log(`${latitude}, ${longitude}`);
-			helpers.sendLocationToServer(latitude, longitude);
-		}, helpers.handleError);
+			sendLocationToServer(latitude, longitude);
+		}, handleError);
 	} else {
 		console.log("Geolocation is not supported by this browser.");
 	}
 }
 
+async function sendLocationToServer(latitude, longitude) {
+	try {
+		const response = await fetch("/scrape", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ latitude: latitude, longitude: longitude }),
+		});
+		const data = await response.json();
+		console.log("location saved:", data);
+	} catch (error) {
+		console.log("Error: ", error);
+	}
+}
 
 function handleError(error) {
 	switch (error.code) {
@@ -30,21 +45,5 @@ function handleError(error) {
 		case error.UNKNOWN_ERROR:
 			console.log("An unknown error occurred.");
 			break;
-	}
-}
-
-async function sendLocationToServer(latitude, longitude) {
-	try {
-		const response = await fetch("/save_location", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ latitude: latitude, longitude: longitude }),
-		});
-		const data = await response.json();
-		console.log("location saved:", data);
-	} catch (error) {
-		console.log("Error: ", error);
 	}
 }
