@@ -15,6 +15,13 @@ function getLocation() {
 	}
 }
 
+// URL endpoint needed for OSM Nominatim:
+// https://nominatim.openstreetmap.org/reverse?format=json&lat=<value>&lon=<value>&zoom=10
+// be sure to specify 'format=json' and 'zoom=10'. granularity only down to city level
+// need to extract 'name' amd 'state'. [address][city] key is not always 'city' sometimes = town or municipality
+
+// TODO: rewrite sendLocationToServer as reverseGeocode. use OSM Nom API to translate lat, lon > City, ST
+// also have it contain logic to place reverseGeocode return value in location field, or abstract to helper function?
 async function sendLocationToServer(latitude, longitude) {
 	try {
 		const response = await fetch("/scrape", {
