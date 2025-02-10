@@ -17,16 +17,20 @@ def after_request(response):
 
 @app.route("/")
 def index():
+    # retrieve env variables and pass to font end
     nominatim_user_agent = os.getenv("NOMINATIM_USER_AGENT")
     return render_template("index.html", nominatim_user_agent=nominatim_user_agent)
+
 
 # TODO: create 'List' route
 # displays a list of all skills found and how many times they appear
 
+
 # TODO: create 'Charts' route
 # page with different charts displaying frequency of tech keywords found
 
-# TODO: create scrape route
+
+# TODO: finish filling out scrape route
 @app.route("/scrape", methods=["POST"])
 def scrape_jobs():
     # get from data from manual input
@@ -43,9 +47,11 @@ def scrape_jobs():
         "keywords": keywords
     })
 
+
 # def scrape_job_postings(lob_title, location, limit):
     # placeholder for web scraping logic
     # return ["keyword1", "keyword2", "keyword3"]
+
 
 if __name__ == "__main__":
     app.run(debug=True)

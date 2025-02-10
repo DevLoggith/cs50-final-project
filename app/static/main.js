@@ -9,10 +9,7 @@ function getLocation() {
 			const longitude = position.coords.longitude;
 			const location = await reverseGeocode(latitude, longitude);
 			if (location) {
-				// TODO: create helper function to place location.city,
-				// location.state in 'location' text field
-				console.log("City:", location.city);
-				console.log("State:", location.state);
+				pasteLocation(location.city, location.state);
 			}
 		}, handleError);
 	} else {
@@ -21,14 +18,14 @@ function getLocation() {
 }
 
 async function reverseGeocode(latitude, longitude) {
-	// see Nominatim docs for info regarding the usage of different parameters
+	// see documentation for info regarding the usage of different endpoint parameters
 	// https://nominatim.org/release-docs/develop/api/Reverse/
 	const endpoint = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`;
 	try {
 		const response = await fetch(endpoint, {
 			headers: {
-				"User-Agent": NOMINATIM_USER_AGENT
-			}
+				"User-Agent": NOMINATIM_USER_AGENT,
+			},
 		});
 		if (!response.ok) {
 			throw new Error("HTTP error. Status: ${response.status}");
@@ -42,6 +39,11 @@ async function reverseGeocode(latitude, longitude) {
 	} catch (error) {
 		console.log("Error during reverse geocoding: ", error);
 	}
+}
+
+function pasteLocation(city, state) {
+	const inputField = document.getElementById("location-input");
+	return (inputField.value = `${city}, ${state}`);
 }
 
 function handleError(error) {
