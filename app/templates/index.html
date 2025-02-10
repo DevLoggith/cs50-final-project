@@ -5,6 +5,9 @@
 {% endblock %} 
 
 {% block main%}
+<!-- injecting env variables to use in Nominatim API -->
+<script>const NOMINATIM_USER_AGENT = "{{ nominatim_user_agent }}";</script>
+
     <div class="container">
         <div class="card">
             <div class="card-body text-center">

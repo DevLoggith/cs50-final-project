@@ -21,11 +21,15 @@ function getLocation() {
 }
 
 async function reverseGeocode(latitude, longitude) {
-	// see Nominatum docs for info regarding the usage of different parameters
+	// see Nominatim docs for info regarding the usage of different parameters
 	// https://nominatim.org/release-docs/develop/api/Reverse/
 	const endpoint = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`;
 	try {
-		const response = await fetch(endpoint);
+		const response = await fetch(endpoint, {
+			headers: {
+				"User-Agent": NOMINATIM_USER_AGENT
+			}
+		});
 		if (!response.ok) {
 			throw new Error("HTTP error. Status: ${response.status}");
 		}
