@@ -4,37 +4,39 @@ document
 
 function getLocation() {
 	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition((position) => {
+		navigator.geolocation.getCurrentPosition(async (position) => {
 			const latitude = position.coords.latitude;
 			const longitude = position.coords.longitude;
-			console.log(`${latitude}, ${longitude}`);
-			sendLocationToServer(latitude, longitude);
+			const location = await reverseGeocode(latitude, longitude);
+			if (location) {
+				// TODO: create helper function to place location.city,
+				// location.state in 'location' text field
+				console.log("City:", location.city);
+				console.log("State:", location.state);
+			}
 		}, handleError);
 	} else {
 		console.log("Geolocation is not supported by this browser.");
 	}
 }
 
-// URL endpoint needed for OSM Nominatim:
-// https://nominatim.openstreetmap.org/reverse?format=json&lat=<value>&lon=<value>&zoom=10
-// be sure to specify 'format=json' and 'zoom=10'. granularity only down to city level
-// need to extract 'name' amd 'state'. [address][city] key is not always 'city' sometimes = town or municipality
-
-// TODO: rewrite sendLocationToServer as reverseGeocode. use OSM Nom API to translate lat, lon > City, ST
-// also have it contain logic to place reverseGeocode return value in location field, or abstract to helper function?
-async function sendLocationToServer(latitude, longitude) {
+async function reverseGeocode(latitude, longitude) {
+	// see Nominatum docs for info regarding the usage of different parameters
+	// https://nominatim.org/release-docs/develop/api/Reverse/
+	const endpoint = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`;
 	try {
-		const response = await fetch("/scrape", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ latitude: latitude, longitude: longitude }),
-		});
+		const response = await fetch(endpoint);
+		if (!response.ok) {
+			throw new Error("HTTP error. Status: ${response.status}");
+		}
 		const data = await response.json();
-		console.log("location saved:", data);
+		const address = data.address;
+		const city = data.name;
+		const state = address.state;
+
+		return { city, state };
 	} catch (error) {
-		console.log("Error: ", error);
+		console.log("Error during reverse geocoding: ", error);
 	}
 }
 
