@@ -18,6 +18,8 @@ function getLocation() {
 }
 
 async function reverseGeocode(latitude, longitude) {
+	// 1 request per second as per Nominatim's rate limits
+	await delay(1000);
 	// see documentation for info regarding the usage of different endpoint parameters
 	// https://nominatim.org/release-docs/develop/api/Reverse/
 	const endpoint = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`;
@@ -39,6 +41,10 @@ async function reverseGeocode(latitude, longitude) {
 	} catch (error) {
 		console.log("Error during reverse geocoding: ", error);
 	}
+}
+
+function delay(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function pasteLocation(city, state) {
