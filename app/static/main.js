@@ -26,7 +26,7 @@ async function reverseGeocode(latitude, longitude) {
 	try {
 		const response = await fetch(endpoint, {
 			headers: {
-				"User-Agent": NOMINATIM_USER_AGENT,
+				"User-Agent": NOMINATIM_USER_AGENT, // variable stored in .env
 			},
 		});
 		if (!response.ok) {
@@ -44,7 +44,7 @@ async function reverseGeocode(latitude, longitude) {
 }
 
 function delay(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function pasteLocation(city, state) {

@@ -43,7 +43,9 @@ def scrape_jobs():
     # return results to the client for storage
     return jsonify({
         # other data needed? just keywords data needed?
+        # 
         "location": location,
+        "job_title": job_title,
         "keywords": keywords
     })
 
