@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, jsonify
+from scrape import scrape_website
 
 load_dotenv()
 
@@ -23,11 +24,12 @@ def index():
 
 
 # TODO: create 'List' route
-# displays a list of all skills found and how many times they appear
+# displays a list of ALL skills found and how many times they appear
 
 
 # TODO: create 'Charts' route
 # page with different charts displaying frequency of tech keywords found
+# limited to the top 5-10 tech keywords returned
 
 
 # TODO: finish filling out scrape route
@@ -37,8 +39,8 @@ def scrape_jobs():
     job_title = request.form.get("job_title")
     location = request.form.get("location")
     
-    # run web scraper (scrapy)
-    keywords = scrape_job_postings(job_title, location, limit=100)
+    # run web scraper (selenium in scrape.py)
+    keywords = scrape_website(job_title, location, limit=100)
     
     # return results to the client for storage
     return jsonify({
@@ -47,11 +49,6 @@ def scrape_jobs():
         "job_title": job_title,
         "keywords": keywords
     })
-
-
-# def scrape_job_postings(lob_title, location, limit):
-    # placeholder for web scraping logic
-    # return ["keyword1", "keyword2", "keyword3"]
 
 
 if __name__ == "__main__":

@@ -6,7 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 
-def scrape_website():
+# include a limit argument, or just not include logic to continue to next page? 
+def scrape_website(title, location, limit):
     driver = set_up_driver()
 
     try:
