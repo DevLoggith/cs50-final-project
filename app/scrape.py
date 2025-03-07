@@ -1,45 +1,35 @@
-import selenium.webdriver as webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import mechanicalsoup
 import time
 
 
+q = "software engineer"
+l = "cleveland, oh"
+
+browser = mechanicalsoup.StatefulBrowser()
+browser.set_user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
+browser.open(f"https://us.jora.com/j?sp=homepage&trigger_source=homepage&q={q}&l={l}")
+
+print(browser.page)
+
+
 # include a limit argument, or just not include logic to continue to next page? 
-def scrape_website(title, location, limit):
-    driver = set_up_driver()
+# def scrape_website(title, location, limit):
 
-    try:
-        driver.get("https://www.linkedin.com/jobs/search/?currentJobId=4150358483")
-
-        # wait until site has loaded
-        # close popup "sign-in" modal
-        # place job title and location into respective input fields and search
-        # wait for search to complete
-        # keep scrolling to bottom of page until no more jobs are loaded ("see more jobs" button appears)
-            # alternately waiting each time for new job postings to load
-        # scroll back to top of page(?)
-        # for each link nested under each <li> job card:
-            # follow link nested under each <li> job posting
-            # click on <button class="show-more-less-html__button">
-            # extract all text nested under <section class="description">
-        # return extracted job descriptions
-
-    except Exception as e:
-        print(f"An error has occurred: {e}")
-    
-    finally:
-        driver.quit()
-    
-
-def set_up_driver():
-    chromedriver_path = "./chromedriver"
-    options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized") 
-    driver = webdriver.Chrome(service=Service(chromedriver_path), options=options)
-    return driver
+    # wait until site has loaded
+    # place job title and location into respective input fields
+    # search
+    # wait for search to complete
+    # for each page
+        # for each <li>
+            # click each <li> under the <ul id="job-list"> to open the <aside>
+            # wait to load
+            # scrape all text nested under <div data-testid="viewJobBodyJobFullDescriptionContent"> (or <div class="css-cxpe4v") 20 per page
+                # format scraped job description
+                # remove new lines, empty lines, and punctuation
+                # extract keywords via SpaCy and pre-defined tech_keywords object therein
+            # follow next page link (<a class="css-1puj5o8" href="">)
+    # return __ of keywords
 
 
-if __name__ == "__main__":
-    scrape_website()
+# Scraping seems to be more of a dead end. most sites block with anti-bot measures
+# or captchas. look into accessing an API like jobdataapi?
