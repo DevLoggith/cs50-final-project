@@ -1,35 +1,78 @@
-import mechanicalsoup
+import undetected_chromedriver as uc
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 import time
+import logging
 
 
-q = "software engineer"
-l = "cleveland, oh"
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-browser = mechanicalsoup.StatefulBrowser()
-browser.set_user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
-browser.open(f"https://us.jora.com/j?sp=homepage&trigger_source=homepage&q={q}&l={l}")
+def scrape_job_descriptions(job_title, location, limit=3):
+    # Initialize undetected ChromeDriver
+    options = uc.ChromeOptions()
+    options.headless = True  # Run in headless mode
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    
+    logger.info("Initializing Chrome browser...")
+    browser = uc.Chrome(options=options)
+    wait = WebDriverWait(browser, 20)
+    
+    try:
+        logger.info("Loading page...")
+        browser.get("https://us.jora.com/")
+        
+        logger.info("Waiting for search form...")
+        job_input = wait.until(
+            EC.presence_of_element_located((By.NAME, "q"))
+        )
+        location_input = browser.find_element(By.NAME, "l")
+        
+        logger.info("Entering search criteria...")
+        job_input.send_keys(job_title)
+        location_input.send_keys(location)
+        location_input.send_keys(Keys.RETURN)
+        
+        logger.info("Waiting for results...")
+        time.sleep(5)
+        
+        # Find and process job listings
+        job_links = wait.until(
+            EC.presence_of_all_elements_located((By.CLASS_NAME, "show-job-description"))
+        )
+        
+        job_descriptions = []
+        for i, link in enumerate(job_links[:limit], 1):
+            try:
+                logger.info(f"Processing job {i}...")
+                link.click()
+                time.sleep(2)
+                description = wait.until(
+                    EC.presence_of_element_located((By.CLASS_NAME, "job-description-container"))
+                )
+                clean_description = " ".join(description.text.strip().split())
+                job_descriptions.append({
+                    "index": i,
+                    "description": clean_description
+                })
+                print(f"Job Description {i} scraped successfully")
+                print("-" * 80)
+            except Exception as e:
+                logger.error(f"Error processing job {i}: {str(e)}")
+                continue
 
-print(browser.page)
+        print(job_descriptions)
+        return job_descriptions
+            
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        logger.info("Closing browser...")
+        browser.quit()
 
-
-# include a limit argument, or just not include logic to continue to next page? 
-# def scrape_website(title, location, limit):
-
-    # wait until site has loaded
-    # place job title and location into respective input fields
-    # search
-    # wait for search to complete
-    # for each page
-        # for each <li>
-            # click each <li> under the <ul id="job-list"> to open the <aside>
-            # wait to load
-            # scrape all text nested under <div data-testid="viewJobBodyJobFullDescriptionContent"> (or <div class="css-cxpe4v") 20 per page
-                # format scraped job description
-                # remove new lines, empty lines, and punctuation
-                # extract keywords via SpaCy and pre-defined tech_keywords object therein
-            # follow next page link (<a class="css-1puj5o8" href="">)
-    # return __ of keywords
-
-
-# Scraping seems to be more of a dead end. most sites block with anti-bot measures
-# or captchas. look into accessing an API like jobdataapi?
+job = "software programmer"
+location = "cleveland, oh"
+scrape_job_descriptions(job, location)
