@@ -44,6 +44,8 @@ def scrape_job_descriptions(job_title, location, limit=3):
             EC.presence_of_all_elements_located((By.CLASS_NAME, "show-job-description"))
         )
         
+        # TODO: handle pagination to scrape multiple pages of job postings
+        # set limit or scrape all job postings available per search?
         job_descriptions = []
         for i, link in enumerate(job_links[:limit], 1):
             try:
@@ -64,7 +66,6 @@ def scrape_job_descriptions(job_title, location, limit=3):
                 logger.error(f"Error processing job {i}: {str(e)}")
                 continue
 
-        print(job_descriptions)
         return job_descriptions
             
     except Exception as e:
