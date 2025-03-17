@@ -115,6 +115,12 @@ def scrape_job_descriptions(job_title, location, limit=45):
                     current_job = len(job_descriptions) + 1
                     logger.info(f"Processing job {current_job}...")
                     link.click()
+                    wait.until(
+                        lambda browser: browser.find_element(
+                            By.CSS_SELECTOR,
+                            ".jdv-content[data-hidden='false']"
+                        )
+                    )
                     description = wait.until(
                         EC.presence_of_element_located((By.CLASS_NAME, "job-description-container"))
                     )
@@ -142,4 +148,3 @@ def scrape_job_descriptions(job_title, location, limit=45):
     finally:
         logger.info("Closing browser...")
         browser.quit()
-        
