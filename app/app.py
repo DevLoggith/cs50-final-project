@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, jsonify
-from scrape import scrape_website
+# from scrape import scrape_website
 
 load_dotenv()
 
@@ -23,8 +23,13 @@ def index():
     return render_template("index.html", nominatim_user_agent=nominatim_user_agent)
 
 
-# TODO: create 'List' route
+# TODO: finish 'List' route
 # displays a list of ALL skills found and how many times they appear
+@app.route("/list")
+def list():
+    # rows = keywords_dict
+
+    return render_template("list.html")
 
 
 # TODO: create 'Charts' route
@@ -32,7 +37,7 @@ def index():
 # limited to the top 5-10 tech keywords returned
 
 
-# TODO: finish filling out scrape route
+# TODO: finish scrape route
 @app.route("/scrape", methods=["POST"])
 def scrape_jobs():
     # get from data from manual input

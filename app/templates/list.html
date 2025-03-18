@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    List
+{% endblock %}
+
+{% block main %}
+    <h1>Skills List</h1>
+    <p>
+        A complete list of skills for your area, from most common to least common
+    </p>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Skill</th>
+                <th>Frequency</th>
+                <th>Resource</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in rows %}
+            <tr>
+                <td>{{ row["skill"] }}</td>
+                <td>{{ row["frequency"] }}</td>
+                <td>{{ row["resource"] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
