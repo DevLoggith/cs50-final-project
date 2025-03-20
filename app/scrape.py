@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 import logging
+import json
 
 
 logging.basicConfig(level=logging.INFO)
@@ -67,7 +68,7 @@ def navigate_to_next_page(wait, page):
         return False, page
 
 
-def scrape_job_descriptions(job_title, location, limit=45):
+def scrape_job_descriptions(job_title, location, limit=50):
     browser = initialize_browser()
     wait = WebDriverWait(browser, 10)
     
@@ -140,6 +141,10 @@ def scrape_job_descriptions(job_title, location, limit=45):
                 if not should_continue:
                     break
 
+        # write output to JSON for testing purposes
+        with open("descriptions.json", "w") as file:
+            json.dump(job_descriptions, file, indent=4)
+        
         return job_descriptions
             
     except Exception as e:
@@ -148,3 +153,8 @@ def scrape_job_descriptions(job_title, location, limit=45):
     finally:
         logger.info("Closing browser...")
         browser.quit()
+
+job = "software engineer"
+location = "cleveland, oh"
+
+scrape_job_descriptions(job, location)
