@@ -6,6 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 import logging
 import json
+import re
 
 
 logging.basicConfig(level=logging.INFO)
@@ -48,6 +49,7 @@ def dismiss_modals(browser):
         logger.error(f"Error dismissing modals: {e}")
 
 def navigate_to_next_page(wait, page):
+    """Helper function to handle next-page navigation"""
     try:
         next_button = wait.until(
             EC.presence_of_element_located((By.CLASS_NAME, "next-page-button"))
@@ -67,6 +69,16 @@ def navigate_to_next_page(wait, page):
         logger.error(f"Error navigating to next page: {e}")
         return False, page
 
+def clean_job_descriptions(text):
+    """Helper function to clean scraped job descriptions"""
+    # convert from WebElement to text and lowercase
+    text_lower = text.text.lower()
+    # remove extra whitespaces and newlines, rejoin with a single space
+    text_less_space = " ".join(text_lower.strip().split())
+    # remove all punctuation that would not be used in a tech keyword
+    clean_text = re.sub(r'[,;:()\[\]{}""''\|\?!]', ' ', text_less_space)
+
+    return clean_text
 
 def scrape_job_descriptions(job_title, location, limit=50):
     browser = initialize_browser()
@@ -125,11 +137,11 @@ def scrape_job_descriptions(job_title, location, limit=50):
                     description = wait.until(
                         EC.presence_of_element_located((By.CLASS_NAME, "job-description-container"))
                     )
-                    clean_description = " ".join(description.text.strip().split())
+                    clean_description = clean_job_descriptions(description)
                     job_descriptions.append({
-                        "index": current_job,
-                        "description": clean_description
-                    })
+                            "index": current_job,
+                            "description": clean_description
+                        })
                     print(f"Job Description {current_job} scraped successfully")
                     print("-" * 80)
                 except Exception as e:
