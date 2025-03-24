@@ -48,6 +48,17 @@ def dismiss_modals(browser):
     except Exception as e:
         logger.error(f"Error dismissing modals: {e}")
 
+def dismiss_ads(browser):
+    try:
+        ad_card = browser.find_element(By.ID, "card")
+        if ad_card.is_displayed():
+            ad_close_button = browser.find_elements(By.ID, "dismiss-button")
+            ad_close_button.click()
+    except NoSuchElementException:
+        pass
+    except Exception as e:
+        logger.error(f"Error dismissing ad: {e}")
+
 def navigate_to_next_page(wait, page):
     """Helper function to handle next-page navigation"""
     try:
@@ -73,10 +84,10 @@ def clean_job_descriptions(text):
     """Helper function to clean scraped job descriptions"""
     # convert from WebElement to text and lowercase
     text_lower = text.text.lower()
-    # remove extra whitespaces and newlines, rejoin with a single space
-    text_less_space = " ".join(text_lower.strip().split())
     # remove all punctuation that would not be used in a tech keyword
-    clean_text = re.sub(r'[,;:()\[\]{}""''\|\?!]', ' ', text_less_space)
+    remove_chars = re.sub(r'[,;:()\[\]{}""''\|\?!]', ' ', text_lower)
+    # remove extra whitespaces and newlines, rejoin with a single space
+    clean_text = " ".join(remove_chars.strip().split())
 
     return clean_text
 
@@ -113,6 +124,7 @@ def scrape_job_descriptions(job_title, location, limit=50):
         while len(job_descriptions) < limit:
             logger.info(f"Scraping page {page}...")
 
+            dismiss_ads(browser)
             dismiss_modals(browser)
 
             # Find and process job listings
@@ -154,7 +166,7 @@ def scrape_job_descriptions(job_title, location, limit=50):
                     break
 
         # write output to JSON for testing purposes
-        with open("descriptions.json", "w") as file:
+        with open("descriptions3.json", "w") as file:
             json.dump(job_descriptions, file, indent=4)
         
         return job_descriptions
@@ -167,6 +179,6 @@ def scrape_job_descriptions(job_title, location, limit=50):
         browser.quit()
 
 job = "software engineer"
-location = "cleveland, oh"
+location = "columbus, oh"
 
 scrape_job_descriptions(job, location)
