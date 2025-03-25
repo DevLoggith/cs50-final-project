@@ -91,7 +91,7 @@ def clean_job_descriptions(text):
 
     return clean_text
 
-def scrape_job_descriptions(job_title, location, limit=50):
+def scrape_job_descriptions(job_title, location, limit=10):
     browser = initialize_browser()
     wait = WebDriverWait(browser, 10)
     
@@ -118,10 +118,11 @@ def scrape_job_descriptions(job_title, location, limit=50):
         except NoSuchElementException:
            logger.info("Search results found") 
         
-        job_descriptions = []
+        job_descriptions = [{"job_title": job_title, "descriptions": []}]
+        descriptions = job_descriptions[0]["descriptions"]
         page = 1
 
-        while len(job_descriptions) < limit:
+        while len(descriptions) < limit:
             logger.info(f"Scraping page {page}...")
 
             dismiss_ads(browser)
@@ -133,11 +134,11 @@ def scrape_job_descriptions(job_title, location, limit=50):
             )
 
             for link in job_links:
-                if len(job_descriptions) >= limit:
+                if len(descriptions) >= limit:
                     break
 
                 try:
-                    current_job = len(job_descriptions) + 1
+                    current_job = len(descriptions) + 1
                     logger.info(f"Processing job {current_job}...")
                     link.click()
                     wait.until(
@@ -150,8 +151,8 @@ def scrape_job_descriptions(job_title, location, limit=50):
                         EC.presence_of_element_located((By.CLASS_NAME, "job-description-container"))
                     )
                     clean_description = clean_job_descriptions(description)
-                    job_descriptions.append({
-                            "index": current_job,
+                    job_descriptions[0]["descriptions"].append({
+                            "index": current_job, 
                             "description": clean_description
                         })
                     print(f"Job Description {current_job} scraped successfully")
@@ -160,13 +161,13 @@ def scrape_job_descriptions(job_title, location, limit=50):
                     logger.error(f"Error processing job {current_job}: {e}")
                     continue
             
-            if len(job_descriptions) < limit:
+            if len(descriptions) < limit:
                 should_continue, page = navigate_to_next_page(wait, page)
                 if not should_continue:
                     break
 
         # write output to JSON for testing purposes
-        with open("descriptions3.json", "w") as file:
+        with open("descriptions.json", "w") as file:
             json.dump(job_descriptions, file, indent=4)
         
         return job_descriptions
@@ -179,6 +180,6 @@ def scrape_job_descriptions(job_title, location, limit=50):
         browser.quit()
 
 job = "software engineer"
-location = "columbus, oh"
+location = "cleveland, oh"
 
 scrape_job_descriptions(job, location)
