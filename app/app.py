@@ -21,6 +21,7 @@ def index():
     # retrieve env variables and pass to font end
     nominatim_user_agent = os.getenv("NOMINATIM_USER_AGENT")
     return render_template("index.html", nominatim_user_agent=nominatim_user_agent)
+    # TODO: add form validation
 
 
 # TODO: finish 'List' route
