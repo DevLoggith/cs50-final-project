@@ -1,4 +1,4 @@
-# keep artifacts like '.js' or juts the prefixes? (vue, ember, next, nuxt, etc.)
+# keep artifacts like '.js' or just the prefixes? (vue, ember, next, nuxt, etc.)
 # create logic after filtering to combine keywords like 'google cloud platform' + 'gcp'?
 keywords = [
     'aircrack-ng','aks', 'algorand', 'anaconda', 'android', 'angular', 'ansible',
