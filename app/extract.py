@@ -1,6 +1,6 @@
 # keep artifacts like '.js' or just the prefixes? (vue, ember, next, nuxt, etc.)
 # create logic after filtering to combine keywords like 'google cloud platform' + 'gcp'?
-keywords = [
+keywords = {
     'aircrack-ng','aks', 'algorand', 'anaconda', 'android', 'angular', 'ansible',
     'apache', 'appium', 'arangodb', 'arcore', 'arduino', 'arkit', 'aseprite',
     'asp.net', 'aws', 'azure', 'azure devops', 'azure functions', 'bash', 'bigquery',
@@ -34,4 +34,4 @@ keywords = [
     'unity', 'unreal engine', 'vba', 'vercel', 'visual basic', 'vite', 'vue.js',
     'web3.js', 'webassembly', 'weka', 'windows', 'wireshark', 'xamarin', 'xgboost',
     'xml', 'zbrush'
-    ]
+    }
