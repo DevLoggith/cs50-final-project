@@ -166,6 +166,7 @@ def scrape_job_descriptions(job_title, location, limit=10):
                 if not should_continue:
                     break
 
+        # TODO: remove json export
         # write output to JSON for testing purposes
         with open("descriptions.json", "w") as file:
             json.dump(job_descriptions, file, indent=4)
@@ -179,6 +180,7 @@ def scrape_job_descriptions(job_title, location, limit=10):
         logger.info("Closing browser...")
         browser.quit()
 
+# TODO: remove function call
 job = "software engineer"
 location = "cleveland, oh"
 
