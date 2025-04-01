@@ -13,7 +13,9 @@ def find_keywords(keywords, description):
         # escapes special characters in keywords like 'c#' & '.net"
         escaped_keyword = re.escape(keyword)
         # handles word boundaries & keywords with special characters
+            # targets any non-word characters at word boundaries
         pattern1 = fr'(?:^|[^\w]){escaped_keyword}(?:$|[^\w])'
+            # # targets any whitespace or specified punctuation at word boundaries
         pattern2 = fr'(?:^|[\s.,!?;]){escaped_keyword}(?:$|[\s.,!?;])'
 
         if re.search(pattern2, description):
