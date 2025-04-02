@@ -1,7 +1,7 @@
-""" Keywords set used for keyword extraction and matching."""
+""" Keywords set used for keyword extraction and matching"""
 
 
-keywords = {
+keywords_set = {
     'aircrack-ng','aks', 'algorand', 'anaconda', 'android', 'angular', 'ansible',
     'apache', 'appium', 'arangodb', 'arcore', 'arduino', 'arkit', 'aseprite',
     'asp.net', 'aws', 'azure', 'azure devops', 'azure functions', 'bash', 'bigquery',
