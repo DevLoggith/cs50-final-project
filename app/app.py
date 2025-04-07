@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, jsonify
-# from scrape import scrape_website
+from scrape import scrape_job_descriptions
+from extract import extract_total_keywords
 
 load_dotenv()
 
@@ -35,26 +36,19 @@ def list():
 
 # TODO: create 'Charts' route
 # page with different charts displaying frequency of tech keywords found
-# limited to the top 5-10 tech keywords returned
+# limited to the top 5-10 tech keywords returned?
 
 
 # TODO: finish scrape route
 @app.route("/scrape", methods=["POST"])
 def scrape_jobs():
-    # get from data from manual input
     job_title = request.form.get("job_title")
     location = request.form.get("location")
     
-    # run web scraper (selenium in scrape.py)
-    keywords = scrape_website(job_title, location, limit=100)
-    
-    # return results to the client for storage
-    return jsonify({
-        # other data needed? just keywords data needed?
-        "location": location,
-        "job_title": job_title,
-        "keywords": keywords
-    })
+    job_descriptions = scrape_job_descriptions(job_title, location, limit=25)
+    keywords_dict = extract_total_keywords(job_descriptions)
+    print(keywords_dict)
+    return keywords_dict
 
 
 if __name__ == "__main__":
