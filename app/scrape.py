@@ -1,12 +1,12 @@
-import undetected_chromedriver as uc
+import logging
+import re
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
-import logging
-import json
-import re
+from typing import Any, List, Dict
+import undetected_chromedriver as uc
 
 
 logging.basicConfig(level=logging.INFO)
@@ -91,7 +91,8 @@ def clean_job_descriptions(text):
 
     return clean_text
 
-def scrape_job_descriptions(job_title, location, limit=10):
+
+def scrape_job_descriptions(job_title: str, location: str, limit=10) -> List[Dict[str, List[Dict[str, Any]]]]:
     browser = initialize_browser()
     wait = WebDriverWait(browser, 10)
     
@@ -165,10 +166,6 @@ def scrape_job_descriptions(job_title, location, limit=10):
                 should_continue, page = navigate_to_next_page(wait, page)
                 if not should_continue:
                     break
-
-        # write output to JSON for testing purposes
-        with open("descriptions.json", "w") as file:
-            json.dump(job_descriptions, file, indent=4)
         
         return job_descriptions
             
@@ -179,7 +176,3 @@ def scrape_job_descriptions(job_title, location, limit=10):
         logger.info("Closing browser...")
         browser.quit()
 
-job = "software engineer"
-location = "cleveland, oh"
-
-scrape_job_descriptions(job, location)
