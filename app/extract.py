@@ -1,22 +1,10 @@
-import re
 from keywords import keywords_set
-# from scrape import job_descriptions
+import re
+from typing import Any, List, Dict
 
-# TODO: figure out how to loop through each description in job_descriptions, extract
-# the keywords based on imported keywords_set, and add them to a dict with
-# key/value pairs like so: {"Java": 6, "c#"; 4} to be returned and passed to app.py
-
-# needs function that loops through job_descriptions, extracts keywords per description,
-# and either adds them to a dictionary starting with a value of one, or increasing
-# the found keyword's value by 1. then returns said dictionary to be passed to
-# app.py for creating lists and charts/graphs
-
-
-keywords = keywords_set
-description = "i like c# and java and c# and javascript and c# too"
 
 def find_keywords(keywords, description):
-# helper function?
+    """Helper function to parse each description for keywords"""
     keywords_present = set()
 
     for keyword in keywords:
@@ -29,3 +17,12 @@ def find_keywords(keywords, description):
             keywords_present.add(keyword)
 
     return keywords_present
+
+def extract_total_keywords(jobs_list: List[Dict[str, List[Dict[str, Any]]]]) -> Dict:
+    total_keywords = {}
+    for job in jobs_list[0]["descriptions"]:
+        found_keywords = find_keywords(keywords_set, job["description"])
+        for keyword in found_keywords:
+            total_keywords[keyword] = total_keywords.get(keyword, 0) + 1
+
+    return total_keywords
