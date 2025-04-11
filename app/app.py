@@ -47,8 +47,8 @@ def scrape_jobs():
     
     job_descriptions = scrape_job_descriptions(job_title, location, limit=10)
     keywords_dict = extract_total_keywords(job_descriptions)
-    # convert dict to JSON via jsonify before storing it in sessionStorage
-    return redirect("list", keywords_dict=keywords_dict)
+    # store data in flask session and pass to different routes
+    return redirect("list")
 
 
 if __name__ == "__main__":
