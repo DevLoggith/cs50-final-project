@@ -22,7 +22,6 @@ def index():
     # retrieve env variables and pass to font end JS
     nominatim_user_agent = os.getenv("NOMINATIM_USER_AGENT")
     return render_template("index.html", nominatim_user_agent=nominatim_user_agent)
-    # TODO: add form validation
 
 
 # TODO: finish 'List' route
@@ -42,6 +41,7 @@ def list():
 # TODO: finish scrape route
 @app.route("/scrape", methods=["POST"])
 def scrape_jobs():
+    # TODO: add form validation
     job_title = request.form.get("job_title")
     location = request.form.get("location")
     

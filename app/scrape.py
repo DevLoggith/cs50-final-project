@@ -5,12 +5,23 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
-from typing import Any, List, Dict
+from typing import List, TypedDict
 import undetected_chromedriver as uc
+
+class Description(TypedDict):
+    index: int
+    description: str
+
+class Job(TypedDict):
+    job_title: str
+    descriptions: List[Description]
+
+JobsList = List[Job]
 
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 def initialize_browser():
     """Helper function to initialize undetected ChromeDriver"""
@@ -80,7 +91,7 @@ def navigate_to_next_page(wait, page):
         logger.error(f"Error navigating to next page: {e}")
         return False, page
 
-def clean_job_descriptions(text):
+def clean_job_description(text):
     """Helper function to clean scraped job descriptions"""
     # convert from WebElement to text and lowercase
     text_lower = text.text.lower()
@@ -92,7 +103,7 @@ def clean_job_descriptions(text):
     return clean_text
 
 
-def scrape_job_descriptions(job_title: str, location: str, limit=10) -> List[Dict[str, List[Dict[str, Any]]]]:
+def scrape_job_descriptions(job_title: str, location: str, limit=10) -> JobsList:
     browser = initialize_browser()
     wait = WebDriverWait(browser, 10)
     
@@ -119,8 +130,8 @@ def scrape_job_descriptions(job_title: str, location: str, limit=10) -> List[Dic
         except NoSuchElementException:
            logger.info("Search results found") 
         
-        job_descriptions = [{"job_title": job_title, "descriptions": []}]
-        descriptions = job_descriptions[0]["descriptions"]
+        jobs_list = [{"job_title": job_title, "descriptions": []}]
+        descriptions = jobs_list[0]["descriptions"]
         page = 1
 
         while len(descriptions) < limit:
@@ -151,8 +162,8 @@ def scrape_job_descriptions(job_title: str, location: str, limit=10) -> List[Dic
                     description = wait.until(
                         EC.presence_of_element_located((By.CLASS_NAME, "job-description-container"))
                     )
-                    clean_description = clean_job_descriptions(description)
-                    job_descriptions[0]["descriptions"].append({
+                    clean_description = clean_job_description(description)
+                    jobs_list[0]["descriptions"].append({
                             "index": current_job, 
                             "description": clean_description
                         })
@@ -167,7 +178,7 @@ def scrape_job_descriptions(job_title: str, location: str, limit=10) -> List[Dic
                 if not should_continue:
                     break
         
-        return job_descriptions
+        return jobs_list
             
     except Exception as e:
         print(f"An error occurred: {e}")
