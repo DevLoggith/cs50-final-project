@@ -1,12 +1,15 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, jsonify, redirect, render_template, request
+from flask import Flask, redirect, render_template, request, session
+import secrets
 from scrape import scrape_job_descriptions
 from extract import extract_total_keywords
 
 load_dotenv()
 
 app = Flask(__name__)
+# generates a new session key each time the program is run
+app.secret_key = secrets.token_hex(16)
 
 @app.after_request
 def after_request(response):
@@ -38,7 +41,6 @@ def list():
 # limited to the top 5-10 tech keywords returned?
 
 
-# TODO: finish scrape route
 @app.route("/scrape", methods=["POST"])
 def scrape_jobs():
     # TODO: add form validation
@@ -47,8 +49,9 @@ def scrape_jobs():
     
     job_descriptions = scrape_job_descriptions(job_title, location, limit=10)
     keywords_dict = extract_total_keywords(job_descriptions)
-    # store data in flask session and pass to different routes
-    return redirect("list")
+    session["keywords_data"] = keywords_dict
+    session_data = session["keywords_data"]
+    return render_template("list.html", session_data=session_data)
 
 
 if __name__ == "__main__":
