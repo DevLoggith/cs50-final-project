@@ -1,6 +1,7 @@
 from keywords import keywords_set
 import re
-from typing import Any, List, Dict
+from scrape import JobsList
+from typing import Dict
 
 
 def find_keywords(keywords, description):
@@ -18,11 +19,12 @@ def find_keywords(keywords, description):
 
     return keywords_present
 
-def extract_total_keywords(jobs_list: List[Dict[str, List[Dict[str, Any]]]]) -> Dict:
+def extract_total_keywords(jobs_list: JobsList) -> Dict[str, int]:
     total_keywords = {}
     for job in jobs_list[0]["descriptions"]:
         found_keywords = find_keywords(keywords_set, job["description"])
         for keyword in found_keywords:
             total_keywords[keyword] = total_keywords.get(keyword, 0) + 1
+        sorted_keywords = dict(sorted(total_keywords.items(), key=lambda item: item[1], reverse=True))
 
-    return total_keywords
+    return sorted_keywords

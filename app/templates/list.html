@@ -14,15 +14,13 @@
             <tr>
                 <th>Skill</th>
                 <th>Frequency</th>
-                <th>Resource</th>
             </tr>
         </thead>
         <tbody>
-        {% for row in rows %}
+        {% for keyword, frequency in session_data.items() %}
             <tr>
-                <td>{{ row["skill"] }}</td>
-                <td>{{ row["frequency"] }}</td>
-                <td>{{ row["resource"] }}</td>
+                <td>{{ keyword }}</td>
+                <td>{{ frequency }}</td>
             </tr>
         {% endfor %}
         </tbody>
