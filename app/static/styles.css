@@ -6,3 +6,7 @@
     background-color: var(--main-logo-color);
     border-color: var(--main-logo-color);
 }
+
+#alert-close {
+    float: right;
+}

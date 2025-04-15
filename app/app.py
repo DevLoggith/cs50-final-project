@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session
+from functools import wraps
 import secrets
 from scrape import scrape_job_descriptions
 from extract import extract_total_keywords
@@ -9,7 +10,7 @@ load_dotenv()
 
 app = Flask(__name__)
 # generates a new session key each time the program is run
-app.secret_key = secrets.token_hex(16)
+app.config["SECRET_KEY"] = secrets.token_hex(16)
 
 @app.after_request
 def after_request(response):
@@ -18,6 +19,15 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
+
+def check_for_data(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "keywords_data" not in session or session["keywords_data"] == None:
+            flash("Please run a search first to generate data", "error")
+            return redirect("/")
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 @app.route("/")
@@ -28,17 +38,21 @@ def index():
 
 
 # TODO: finish 'List' route
-# displays a list of ALL skills found and how many times they appear
-@app.route("/list")
+# displays a list of all skills found and how many times they appear
+@app.route("/list", methods=["GET"])
+@check_for_data
 def list():
-    # rows = keywords_dict
-
-    return render_template("list.html")
+    session_data = session["keywords_data"]
+    sorted_keywords_dict = dict(sorted(session_data.items(), key=lambda item: item[1], reverse=True))
+    return render_template("list.html", sorted_keywords_dict=sorted_keywords_dict)
 
 
 # TODO: create 'Charts' route
 # page with different charts displaying frequency of tech keywords found
-# limited to the top 5-10 tech keywords returned?
+# limited to the top 5-10 tech keywords returned? Every keyword where value > 1?
+
+
+# TODO: create 'About' route
 
 
 @app.route("/scrape", methods=["POST"])
@@ -49,9 +63,11 @@ def scrape_jobs():
     
     job_descriptions = scrape_job_descriptions(job_title, location, limit=10)
     keywords_dict = extract_total_keywords(job_descriptions)
+
     session["keywords_data"] = keywords_dict
     session_data = session["keywords_data"]
-    return render_template("list.html", session_data=session_data)
+    sorted_keywords_dict = dict(sorted(session_data.items(), key=lambda item: item[1], reverse=True))
+    return render_template("list.html", sorted_keywords_dict=sorted_keywords_dict)
 
 
 if __name__ == "__main__":
