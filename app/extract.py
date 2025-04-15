@@ -25,6 +25,5 @@ def extract_total_keywords(jobs_list: JobsList) -> Dict[str, int]:
         found_keywords = find_keywords(keywords_set, job["description"])
         for keyword in found_keywords:
             total_keywords[keyword] = total_keywords.get(keyword, 0) + 1
-        sorted_keywords = dict(sorted(total_keywords.items(), key=lambda item: item[1], reverse=True))
 
-    return sorted_keywords
+    return total_keywords
