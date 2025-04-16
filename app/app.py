@@ -37,7 +37,6 @@ def index():
     return render_template("index.html", nominatim_user_agent=nominatim_user_agent)
 
 
-# TODO: finish 'List' route
 # displays a list of all skills found and how many times they appear
 @app.route("/list", methods=["GET"])
 @check_for_data
@@ -50,6 +49,16 @@ def list():
 # TODO: create 'Charts' route
 # page with different charts displaying frequency of tech keywords found
 # limited to the top 5-10 tech keywords returned? Every keyword where value > 1?
+@app.route("/charts")
+@check_for_data
+def charts():
+    data = session["keywords_data"]
+    # create a header row for google chart DataTable format
+    chart_data = [["Technology", "Count"]]
+    for tech, count in data.items():
+        chart_data.append([tech, count])
+
+    return render_template("charts.html", chart_data=chart_data)
 
 
 # TODO: create 'About' route
