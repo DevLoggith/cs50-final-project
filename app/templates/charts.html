@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 
 {% block head %}
+    <script type="text/javascript">
+        const chartData = {{ chart_data | tojson | safe }};
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="module" src="static/charts.js" defer></script>
 {% endblock %}
 
@@ -14,4 +18,9 @@
         Charts showing a visual representation of the most in demand technologies
         for your area
     </p>
+    <h2>Bar Chart</h2>
+    <div id="bar_chart" class="chart-container"></div>
+    
+    <h2>Donut Chart</h2>
+    <div id="pie_chart" class="chart-container"></div>
 {% endblock %}
