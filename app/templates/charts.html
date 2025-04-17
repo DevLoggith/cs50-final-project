@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <script type="text/javascript">
+        const chartData = {{ chart_data | tojson | safe }};
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="module" src="static/charts.js" defer></script>
+{% endblock %}
+
+{% block title %}
+    Charts
+{% endblock %}
+
+{% block main %}
+    <h1>Skills Charts</h1>
+    <p>
+        Charts showing a visual representation of the most in demand technologies
+        for your area
+    </p>
+    <!-- <h2>Column Chart</h2> -->
+    <div id="column_chart" class="chart-container" style="height: 500px"></div>
+    
+    <!-- <h2>Donut Chart</h2> -->
+    <div id="pie_chart" class="chart-container" style="height: 700px"></div>
+{% endblock %}

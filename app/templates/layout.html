@@ -17,12 +17,13 @@
 			defer
 		></script>
 		<link rel="stylesheet" href="/static/styles.css" />
-		<script type="module" src="static/main.js" defer></script>
+		{% block head %}
+    	{% endblock %}
 		<title>SkillSift: {% block title %}{% endblock %}</title>
 		<link rel="icon" type="image/x-icon" href="/static/images/icon.ico" />
 	</head>
 
-	<body>
+	<body class="index">
 		<nav class="navbar navbar-expand-md bg-body-tertiary">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="/">
@@ -75,18 +76,18 @@
 		<footer class="py-3 my-4">
 			<ul class="nav justify-content-center border-bottom pb-3 mb-3">
 				<li class="nav-item">
-					<a href="#" class="nav-link px-2 text-body-secondary">Home</a>
+					<a href="/" class="nav-link px-2 text-body-secondary">Home</a>
 				</li>
 				<li class="nav-item">
-					<a href="#" class="nav-link px-2 text-body-secondary">Skills List</a>
+					<a href="/list" class="nav-link px-2 text-body-secondary">Skills List</a>
 				</li>
 				<li class="nav-item">
-					<a href="#" class="nav-link px-2 text-body-secondary"
+					<a href="/charts" class="nav-link px-2 text-body-secondary"
 						>Skills Charts</a
 					>
 				</li>
 				<li class="nav-item">
-					<a href="#" class="nav-link px-2 text-body-secondary">About</a>
+					<a href="/about" class="nav-link px-2 text-body-secondary">About</a>
 				</li>
 			</ul>
 			<p class="text-center text-body-secondary">
