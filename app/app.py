@@ -53,10 +53,12 @@ def list():
 @check_for_data
 def charts():
     data = session["keywords_data"]
+
     # create a header row for google chart DataTable format
-    chart_data = [["Technology", "Count"]]
+    chart_data = []
     for tech, count in data.items():
         chart_data.append([tech, count])
+    
 
     return render_template("charts.html", chart_data=chart_data)
 
@@ -70,7 +72,7 @@ def scrape_jobs():
     job_title = request.form.get("job_title")
     location = request.form.get("location")
     
-    job_descriptions = scrape_job_descriptions(job_title, location, limit=10)
+    job_descriptions = scrape_job_descriptions(job_title, location, limit=100)
     keywords_dict = extract_total_keywords(job_descriptions)
 
     session["keywords_data"] = keywords_dict
