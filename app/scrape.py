@@ -61,12 +61,33 @@ def dismiss_modals(browser):
 
 def dismiss_ads(browser):
     try:
-        ad_card = browser.find_element(By.ID, "card")
-        if ad_card.is_displayed():
-            ad_close_button = browser.find_elements(By.ID, "dismiss-button")
-            ad_close_button.click()
-    except NoSuchElementException:
-        pass
+        # Remove all Google Ad iframes and their containers
+        browser.execute_script("""
+            const adFrames = document.querySelectorAll('iframe[id^="aswift_"]');
+            adFrames.forEach(frame => {
+                frame.remove();
+            });
+            
+            const adContainers = document.querySelectorAll('ins.adsbygoogle');
+            adContainers.forEach(container => {
+                container.remove();
+            });
+            
+            const overlays = document.querySelectorAll('div[style*="position: fixed"], div[style*="position: absolute"]');
+            overlays.forEach(overlay => {
+                if (overlay.style.zIndex > 100) {
+                    overlay.remove();
+                }
+            });
+        """)
+
+        try:
+            ad_card = browser.find_element(By.ID, "card")
+            if ad_card.is_displayed():
+                ad_close_button = browser.find_elements(By.ID, "dismiss-button")
+                ad_close_button.click()
+        except NoSuchElementException:
+            pass
     except Exception as e:
         logger.error(f"Error dismissing ad: {e}")
 
@@ -103,7 +124,7 @@ def clean_job_description(text):
     return clean_text
 
 
-def scrape_job_descriptions(job_title: str, location: str, limit=10) -> JobsList:
+def scrape_job_descriptions(job_title: str, location: str, limit=100) -> JobsList:
     browser = initialize_browser()
     wait = WebDriverWait(browser, 10)
     
@@ -152,6 +173,7 @@ def scrape_job_descriptions(job_title: str, location: str, limit=10) -> JobsList
                 try:
                     current_job = len(descriptions) + 1
                     logger.info(f"Processing job {current_job}...")
+                    dismiss_ads(browser)
                     link.click()
                     wait.until(
                         lambda browser: browser.find_element(
