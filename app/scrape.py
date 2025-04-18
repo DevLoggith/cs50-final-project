@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from typing import List, TypedDict
 import undetected_chromedriver as uc
@@ -94,7 +95,8 @@ def dismiss_ads(browser):
 def navigate_to_next_page(wait, page):
     """Helper function to handle next-page navigation"""
     try:
-        next_button = wait.until(
+        quick_wait = WebDriverWait(wait._driver, 3)
+        next_button = quick_wait.until(
             EC.presence_of_element_located((By.CLASS_NAME, "next-page-button"))
         )
         if not next_button:
@@ -108,6 +110,9 @@ def navigate_to_next_page(wait, page):
         )
         return True, page
 
+    except TimeoutException:
+        logger.info("No more pages available - next button not found")
+        return False, page
     except Exception as e:
         logger.error(f"Error navigating to next page: {e}")
         return False, page
