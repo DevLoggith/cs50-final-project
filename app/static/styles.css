@@ -10,3 +10,7 @@
 #alert-close {
     float: right;
 }
+
+.main-content {
+    min-height: calc(100dvh - 327px);
+}
