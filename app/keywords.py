@@ -26,7 +26,7 @@ keywords_set = {
     'opencv', 'openvas', 'oracle', 'pandas', 'perl', 'phaser', 'phoenix', 'php',
     'polkadot', 'postgresql', 'postman', 'power bi', 'powershell', 'prometheus',
     'pulsar', 'puppet', 'puppeteer', 'pygame', 'python', 'pytorch', 'r', 'rabbitmq',
-    'rapidminer', 'rds', 'react native', 'redis', 'redux', 'rest', 'ruby',
+    'rapidminer', 'rds', 'react' 'react native', 'redis', 'redux', 'rest', 'ruby',
     'ruby on rails', 'rust', 's3', 'sass', 'scala', 'scikit-learn', 'scssreact',
     'seaborn', 'selenium', 'shell', 'snort', 'snowflake', 'soap', 'socket.io',
     'solidity', 'spacy', 'splunk', 'spring boot', 'sql', 'sql server', 'sqlite',
