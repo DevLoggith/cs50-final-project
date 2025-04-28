@@ -73,7 +73,10 @@ def scrape_jobs():
     location = request.form.get("location")
     
     job_descriptions = scrape_job_descriptions(job_title, location, limit=50)
-    keywords_dict = extract_total_keywords(job_descriptions)
+    if job_descriptions == []:
+        return render_template("no-results.html")
+    else:
+        keywords_dict = extract_total_keywords(job_descriptions)
 
     session["keywords_data"] = keywords_dict
     session_data = session["keywords_data"]

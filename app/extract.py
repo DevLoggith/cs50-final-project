@@ -21,9 +21,12 @@ def find_keywords(keywords, description):
 
 def extract_total_keywords(jobs_list: JobsList) -> Dict[str, int]:
     total_keywords = {}
-    for job in jobs_list[0]["descriptions"]:
-        found_keywords = find_keywords(keywords_set, job["description"])
-        for keyword in found_keywords:
-            total_keywords[keyword] = total_keywords.get(keyword, 0) + 1
+    if not jobs_list:
+        return {}
+    else:
+        for job in jobs_list[0]["descriptions"]:
+            found_keywords = find_keywords(keywords_set, job["description"])
+            for keyword in found_keywords:
+                total_keywords[keyword] = total_keywords.get(keyword, 0) + 1
 
-    return total_keywords
+        return total_keywords
