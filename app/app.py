@@ -68,9 +68,16 @@ def charts():
 
 @app.route("/scrape", methods=["POST"])
 def scrape_jobs():
-    # TODO: add form validation
     job_title = request.form.get("job_title")
     location = request.form.get("location")
+
+    if not job_title:
+        flash("Please enter a job title", "error")
+        return redirect("/")
+    
+    if not location:
+        flash("Please enter a location", "error")
+        return redirect("/")
     
     job_descriptions = scrape_job_descriptions(job_title, location, limit=50)
     if job_descriptions == []:
