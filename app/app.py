@@ -37,7 +37,6 @@ def index():
     return render_template("index.html", nominatim_user_agent=nominatim_user_agent)
 
 
-# displays a list of all skills found and how many times they appear
 @app.route("/list", methods=["GET"])
 @check_for_data
 def list():
@@ -46,9 +45,6 @@ def list():
     return render_template("list.html", sorted_keywords_dict=sorted_keywords_dict)
 
 
-# TODO: create 'Charts' route
-# page with different charts displaying frequency of tech keywords found
-# limited to the top 5-10 tech keywords returned? Every keyword where value > 1?
 @app.route("/charts")
 @check_for_data
 def charts():
@@ -72,11 +68,11 @@ def scrape_jobs():
     location = request.form.get("location")
 
     if not job_title:
-        flash("Please enter a job title", "error")
+        flash("Please enter a job title")
         return redirect("/")
     
     if not location:
-        flash("Please enter a location", "error")
+        flash("Please enter a location")
         return redirect("/")
     
     job_descriptions = scrape_job_descriptions(job_title, location, limit=50)
