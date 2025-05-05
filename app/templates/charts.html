@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
 {% block head %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         const chartData = {{ chart_data | tojson | safe }};
     </script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="module" src="static/charts.js" defer></script>
+    <script src="{{ url_for('static', filename='charts.js') }}" defer></script>
 {% endblock %}
 
 {% block title %}

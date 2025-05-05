@@ -1,102 +1,153 @@
-// TODO: Make charts responsive
-// TODO: limit data down to 5-10 elements with a value of 1?
-
-google.charts.load('current', {'packages':['bar']});
-google.charts.load('current', {'packages':['corechart']});
+google.charts.load("current", { packages: ["corechart"] });
 google.charts.setOnLoadCallback(drawCharts);
 
 function drawCharts() {
-    drawColumnChart();
-    drawPieChart();
+	const screenWidth = window.innerWidth;
+	drawColumnChart(screenWidth);
+	drawPieChart(screenWidth);
 }
 
-function drawColumnChart() {
-    const data = new google.visualization.DataTable()
-    data.addColumn('string', 'Technology');
-    data.addColumn('number', 'Count');
-    data.addColumn({type: 'string', role: 'style'});
-
-    for (let i = 0; i < chartData.length; i++) {
-        const row = chartData[i];
-        let color;
-        switch(row[1]) {
-            case 30: color = 'color: #1A1A7E'; break;
-            case 29: color = 'color: #0047AB'; break;
-            case 28: color = 'color: #0096FF'; break;
-            case 27: color = 'color: #008080'; break;
-            case 26: color = 'color: #00C2A8'; break;
-            case 25: color = 'color: #32CD32'; break;
-            case 24: color = 'color: #228B22'; break;
-            case 23: color = 'color: #66AA00'; break;
-            case 22: color = 'color: #DAA520'; break;
-            case 21: color = 'color: #FFD700'; break;
-            case 20: color = 'color: #FF7300'; break;
-            case 19: color = 'color: #CC5500'; break;
-            case 18: color = 'color: #FFB300'; break;
-            case 17: color = 'color: #8B4000'; break;
-            case 16: color = 'color: #FF2400'; break;
-            case 15: color = 'color: #FF4500'; break;
-            case 14: color = 'color: #8B0707'; break;
-            case 13: color = 'color: #B22222'; break;
-            case 12: color = 'color: #C2185B'; break;
-            case 11: color = 'color: #DD4477'; break;
-            case 10: color = 'color: #9400D3'; break;
-            case 9: color = 'color: #6A0DAD'; break;
-            case 8: color = 'color: #FF00FF'; break;
-            case 7: color = 'color: #4B0082'; break;
-            case 6: color = 'color: #0F52BA'; break;
-            case 5: color = 'color: #007BA7'; break;
-            case 4: color = 'color: #1C39BB'; break;
-            case 3: color = 'color: #00CED1'; break;
-            case 2: color = 'color: #109618'; break;
-            default: color = 'color: grey';
-        }
-        data.addRow([row[0], row[1], color]);
-    };
-
-    data.sort([{column: 1, desc: true}]);
-
-    const columnOptions = {
-        title: 'Tech Skills Column Chart',
-        legend: { position: 'none' },
-        bars: 'vertical',
-        bar: { groupWidth: '70%' },
-        colors: ['#4285f4'],
-        chartArea: { width: '96%', height: '70%' },
-        backgroundColor: { fill: 'transparent' },
-        animation: {
-          startup: true,
-          duration: 500,
-          easing: 'out'
-        }
-      };
-
-    const columnChart = new google.visualization.ColumnChart(document.getElementById('column_chart'));
-    columnChart.draw(data, columnOptions);
+// Helper function to get color based on count value
+function getColorForCount(count) {
+	switch (count) {
+		case 30: return "color: #1A1A7E";
+		case 29: return "color: #0047AB";
+		case 28: return "color: #0096FF";
+		case 27: return "color: #008080";
+		case 26: return "color: #00C2A8";
+		case 25: return "color: #32CD32";
+		case 24: return "color: #228B22";
+		case 23: return "color: #66AA00";
+		case 22: return "color: #DAA520";
+		case 21: return "color: #FFD700";
+		case 20: return "color: #FF7300";
+		case 19: return "color: #CC5500";
+		case 18: return "color: #FFB300";
+		case 17: return "color: #8B4000";
+		case 16: return "color: #FF2400";
+		case 15: return "color: #FF4500";
+		case 14: return "color: #8B0707";
+		case 13: return "color: #B22222";
+		case 12: return "color: #C2185B";
+		case 11: return "color: #DD4477";
+		case 10: return "color: #9400D3";
+		case 9: return "color: #6A0DAD";
+		case 8: return "color: #FF00FF";
+		case 7: return "color: #4B0082";
+		case 6: return "color: #0F52BA";
+		case 5: return "color: #007BA7";
+		case 4: return "color: #1C39BB";
+		case 3: return "color: #00CED1";
+		case 2: return "color: #109618";
+		default: return "color: grey";
+	}
 }
 
-function drawPieChart() {
-    const data = new google.visualization.DataTable()
-    data.addColumn('string', 'Technology');
-    data.addColumn('number', 'Count');
-    chartData.forEach(function(row) {
-        data.addRow([row[0], row[1]])
-    });
+// Helper function to create a DataTable from chart data
+function createDataTableFromChartData(sourceData, limit = null) {
+    const dataTable = new google.visualization.DataTable();
+    dataTable.addColumn("string", "Technology");
+    dataTable.addColumn("number", "Count");
+    dataTable.addColumn({ type: "string", role: "style" });
 
-    data.sort([{column: 1, desc: true}]);
+    let processedData = sourceData.slice();
+    processedData.sort((a, b) => b[1] - a[1]); // Always sort by count, descending
+    
+    if (limit) {
+        processedData = processedData.slice(0, limit); // Take only top N items
+    }
 
-    const pieOptions = {
-        title: 'Tech Skills Donut Chart',
-        pieHole: 0.4,
-        sliceVisibilityThreshold: 1/64,
-        chartArea: { top: '50', width: '100%'},
-        legend: { position: 'bottom'}
-    };
+    for (let i = 0; i < processedData.length; i++) {
+        const row = processedData[i];
+        dataTable.addRow([row[0], row[1], getColorForCount(row[1])]);
+    }
 
-    const pieChart = new google.visualization.PieChart(document.getElementById('pie_chart'));
-    pieChart.draw(data, pieOptions);
-} 
+    return dataTable;
+}
 
-window.addEventListener('resize', function() {
-    drawCharts();
-  });
+function drawColumnChart(screenWidth) {
+	// Base options for column chart
+	const columnOptions = {
+		title: "Tech Skills Column Chart",
+		hAxis: { 
+			title: "Technology Names",
+			slantedText: "true",
+			slantedTextAngle: "45" 
+		},
+		vAxis: {
+			title: "Times Mentioned in Job Descriptions",
+			format: "#",
+		},
+		legend: { position: "none" },
+		bar: { groupWidth: "70%" },
+		chartArea: { width: "92%", height: "70%" },
+		animation: {
+			startup: true,
+			duration: 500,
+			easing: "out",
+		},
+	};
+
+	if (screenWidth < 768) {
+		columnOptions.chartArea = { width: "80%", height: "60%" };
+		columnOptions.bar.groupWidth = "85%";
+		columnOptions.hAxis.slantedText = true;
+		columnOptions.hAxis.slantedTextAngle = 90;
+		columnOptions.hAxis.textStyle = { fontSize: 11 };
+		
+		// On mobile, create a datatable with only top 15 items
+		const data = createDataTableFromChartData(chartData, 15);
+		columnOptions.title += " (Top 15)";
+		
+		const columnChart = new google.visualization.ColumnChart(
+			document.getElementById("column_chart")
+		);
+		columnChart.draw(data, columnOptions);
+	} else {
+		// For tablets and desktops
+		if (screenWidth < 1024) {
+			// Tablet specific settings
+			columnOptions.chartArea = { width: "90%", height: "65%" };
+			columnOptions.hAxis.slantedText = true;
+			columnOptions.hAxis.slantedTextAngle = 55;
+		}
+		// Create full data table
+		const data = createDataTableFromChartData(chartData);
+		
+		const columnChart = new google.visualization.ColumnChart(
+			document.getElementById("column_chart")
+		);
+		columnChart.draw(data, columnOptions);
+	}
+}
+
+function drawPieChart(screenWidth) {
+	// Create the data table for the pie chart
+	const data = new google.visualization.DataTable();
+	data.addColumn("string", "Technology");
+	data.addColumn("number", "Count");
+	chartData.forEach(function (row) {
+		data.addRow([row[0], row[1]]);
+	});
+
+	data.sort([{ column: 1, desc: true }]);
+
+	// Base options for pie chart
+	const pieOptions = {
+		title: "Tech Skills Donut Chart",
+		pieHole: 0.4,
+		sliceVisibilityThreshold: 1 / 64,
+	};
+
+	if (screenWidth < 992) {
+		pieOptions.chartArea = { top: "50", width: "100%" };
+		pieOptions.legend = { position: "bottom" };
+	}
+
+	const pieChart = new google.visualization.PieChart(
+		document.getElementById("pie_chart")
+	);
+	pieChart.draw(data, pieOptions);
+}
+
+window.addEventListener("resize", drawCharts);
