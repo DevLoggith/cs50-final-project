@@ -49,8 +49,6 @@ def list():
 @check_for_data
 def charts():
     data = session["keywords_data"]
-
-    # create a header row for google chart DataTable format
     chart_data = []
     for tech, count in data.items():
         chart_data.append([tech, count])

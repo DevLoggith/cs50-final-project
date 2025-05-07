@@ -80,3 +80,5 @@
     transform: translate(24px, 0);
   }
 }
+
+/* TODO: create media query for adjusting margin & padding of main-content container on smaller screens */
