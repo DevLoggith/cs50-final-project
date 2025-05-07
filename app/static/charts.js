@@ -50,29 +50,28 @@ function createDataTableFromChartData(sourceData, limit = null) {
     dataTable.addColumn("number", "Count");
     dataTable.addColumn({ type: "string", role: "style" });
 
-    let processedData = sourceData.slice();
-    processedData.sort((a, b) => b[1] - a[1]); // Always sort by count, descending
+    let processedData = sourceData.slice(); // makes shallow copy of sourceData
+    processedData.sort((a, b) => b[1] - a[1]); // sort by count, descending
     
     if (limit) {
-        processedData = processedData.slice(0, limit); // Take only top N items
+        processedData = processedData.slice(0, limit); // take only top n items
     }
 
-    for (let i = 0; i < processedData.length; i++) {
-        const row = processedData[i];
-        dataTable.addRow([row[0], row[1], getColorForCount(row[1])]);
-    }
+	processedData.forEach(row => {
+		dataTable.addRow([row[0], row[1], getColorForCount(row[1])]);
+	});
 
     return dataTable;
 }
 
 function drawColumnChart(screenWidth) {
-	// Base options for column chart
+	// Base options for column chart (& for every device over 1024px wide)
 	const columnOptions = {
 		title: "Tech Skills Column Chart",
 		hAxis: { 
 			title: "Technology Names",
-			slantedText: "true",
-			slantedTextAngle: "45" 
+			slantedText: true,
+			slantedTextAngle: 45 
 		},
 		vAxis: {
 			title: "Times Mentioned in Job Descriptions",
@@ -103,10 +102,9 @@ function drawColumnChart(screenWidth) {
 			document.getElementById("column_chart")
 		);
 		columnChart.draw(data, columnOptions);
+
 	} else {
-		// For tablets and desktops
 		if (screenWidth < 1024) {
-			// Tablet specific settings
 			columnOptions.chartArea = { width: "90%", height: "65%" };
 			columnOptions.hAxis.slantedText = true;
 			columnOptions.hAxis.slantedTextAngle = 55;
@@ -123,14 +121,15 @@ function drawColumnChart(screenWidth) {
 
 function drawPieChart(screenWidth) {
 	// Create the data table for the pie chart
-	const data = new google.visualization.DataTable();
-	data.addColumn("string", "Technology");
-	data.addColumn("number", "Count");
-	chartData.forEach(function (row) {
-		data.addRow([row[0], row[1]]);
+	const dataTable = new google.visualization.DataTable();
+	dataTable.addColumn("string", "Technology");
+	dataTable.addColumn("number", "Count");
+	
+	chartData.forEach(row => {
+		dataTable.addRow([row[0], row[1]]);
 	});
 
-	data.sort([{ column: 1, desc: true }]);
+	dataTable.sort([{ column: 1, desc: true }]);
 
 	// Base options for pie chart
 	const pieOptions = {
@@ -147,7 +146,7 @@ function drawPieChart(screenWidth) {
 	const pieChart = new google.visualization.PieChart(
 		document.getElementById("pie_chart")
 	);
-	pieChart.draw(data, pieOptions);
+	pieChart.draw(dataTable, pieOptions);
 }
 
 window.addEventListener("resize", drawCharts);
