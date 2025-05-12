@@ -73,6 +73,9 @@ def scrape_jobs():
         flash("Please enter a location")
         return redirect("/")
     
+    session["job_title"] = job_title
+    session["location"] = location
+    
     job_descriptions = scrape_job_descriptions(job_title, location, limit=50)
     if job_descriptions == []:
         return render_template("no-results.html")
@@ -80,9 +83,9 @@ def scrape_jobs():
         keywords_dict = extract_total_keywords(job_descriptions)
 
     session["keywords_data"] = keywords_dict
-    session_data = session["keywords_data"]
-    sorted_keywords_dict = dict(sorted(session_data.items(), key=lambda item: item[1], reverse=True))
-    return render_template("list.html", sorted_keywords_dict=sorted_keywords_dict)
+
+    sorted_keywords_dict = dict(sorted(session["keywords_data"].items(), key=lambda item: item[1], reverse=True))
+    return render_template("list.html", job_title=job_title, location=location, sorted_keywords_dict=sorted_keywords_dict)
 
 
 if __name__ == "__main__":
