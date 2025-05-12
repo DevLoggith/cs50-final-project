@@ -58,7 +58,10 @@ def charts():
         chart_data.append([tech, count])
     
 
-    return render_template("charts.html", chart_data=chart_data)
+    return render_template("charts.html",
+                           job_title=session["job_title"],
+                           location=session["location"],
+                           chart_data=chart_data)
 
 
 # TODO: create 'About' route
