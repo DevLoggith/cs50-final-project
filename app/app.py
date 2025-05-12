@@ -42,7 +42,7 @@ def index():
 def list():
     session_data = session["keywords_data"]
     sorted_keywords_dict = dict(sorted(session_data.items(), key=lambda item: item[1], reverse=True))
-    return render_template("list.html", sorted_keywords_dict=sorted_keywords_dict)
+    return render_template("list.html", job_title=session["job_title"], location=session["location"], sorted_keywords_dict=sorted_keywords_dict)
 
 
 @app.route("/charts")
