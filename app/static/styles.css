@@ -13,11 +13,16 @@
 }
 
 .main-content {
-    min-height: calc(100dvh - 327px);
+  /* header + main-content padding + footer */
+    min-height: calc(100dvh - (86px + 96px + 181px));
 }
 
 #loading-container p {
     margin-bottom: 0%;
+}
+
+.attribution {
+  font-size: 0.85em;
 }
 
 /* loader styles */
