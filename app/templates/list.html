@@ -8,13 +8,14 @@
     <h1>Skills List</h1>
     <p>
         A complete list of skills for {{ job_title }}s near {{ location }}.
-        From most requested to least requested
+        From most requested to least requested, based on {{ num_of_jobs }}
+        different job postings.
     </p>
     <table class="table table-striped">
         <thead class="table-dark">
             <tr>
-                <th>Skill</th>
-                <th>Frequency</th>
+                <th>Technology</th>
+                <th>Number of job descriptions out of {{ num_of_jobs }}</th>
             </tr>
         </thead>
         <tbody>
