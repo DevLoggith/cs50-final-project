@@ -85,7 +85,9 @@ def scrape_jobs():
     
     job_descriptions = scrape_job_descriptions(job_title, location, limit=20)
     if job_descriptions == []:
-        return render_template("no-results.html")
+        return render_template("no-results.html",
+                               job_title=job_title,
+                               location=location,)
     else:
         keywords_dict = extract_total_keywords(job_descriptions)
 
