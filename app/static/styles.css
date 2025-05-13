@@ -1,3 +1,6 @@
+/* TODO: create media query for adjusting margin & padding of main-content container on smaller screens */
+/* TODO: change color of footer to match header */
+
 :root {
     --main-logo-color: #00cad5;
     --secondary-logo-color: #ec6d76;
@@ -85,5 +88,3 @@
     transform: translate(24px, 0);
   }
 }
-
-/* TODO: create media query for adjusting margin & padding of main-content container on smaller screens */

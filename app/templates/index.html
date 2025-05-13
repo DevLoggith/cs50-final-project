@@ -12,61 +12,72 @@
 <!-- injecting env variables to use in Nominatim API -->
 <script>const NOMINATIM_USER_AGENT = "{{ nominatim_user_agent }}";</script>
 
-    <div class="container">
-        <div class="card">
-            <div class="card-body text-center">
-                <form action="/scrape" method="post">
-                    <div class="mb-3 d-flex flex-column align-items-center">
-                        <!-- job title input -->
-                        <div class="mb-3 w-auto">
-                            <input
-                                autocomplete="off"
-                                autofocus
-                                class="form-control w-auto"
-                                name="job_title"
-                                placeholder="Job Title"
-                                type="text"
-                            />
-                        </div>
-                
-                        <!-- location input group -->
-                        <div class="input-group mb-3 w-auto">
-                            <button
-                                class="btn btn-outline-secondary"
-                                type="button"
-                                id="location-button"
-                                title="Use my location"
-                            >
-                                &#x1F4CD
-                            </button>
-                            <input
-                                type="text"
-                                id="location-input"
-                                class="form-control"
-                                name="location"
-                                placeholder="Enter a location"
-                                aria-label="Example text with button addon"
-                                aria-describedby="button-addon1"
-                            />
-                        </div>
-                        <!-- container for loading text and loader animation -->
-                        <div id="loading-container" hidden="">
-                            <p>Searching job descriptions...</p>
-                            <p>Can take up to one minute to complete</p>
-                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-                        </div>
-                
-                        <!-- search button -->
-                        <button 
-                            onclick="document.getElementById('loading-container').removeAttribute('hidden')" 
-                            class="btn btn-primary btn-lg" 
-                            type="submit">
-                            Search
-                        </button>
+<p>
+    Find out what skills, technologies, and knowledge are most in demand for your
+    job
+</p>
+<p>
+    Enter your chosen job title and location below and click search.
+    SkillSift will search local job postings and return to you a complete
+    list - and graphs - of the most in demand skills and technologies for your
+    chosen job.
+</p>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body text-center">
+            <form action="/scrape" method="post">
+                <div class="mb-3 d-flex flex-column align-items-center">
+                    <!-- job title input -->
+                    <div class="mb-3 w-auto">
+                        <input
+                            autocomplete="off"
+                            autofocus
+                            class="form-control w-auto"
+                            name="job_title"
+                            placeholder="Job Title"
+                            type="text"
+                        />
                     </div>
-                </form>
-                
-            </div>
+            
+                    <!-- location input group -->
+                    <div class="input-group mb-3 w-auto">
+                        <button
+                            class="btn btn-outline-secondary"
+                            type="button"
+                            id="location-button"
+                            title="Use my location"
+                        >
+                            &#x1F4CD
+                        </button>
+                        <input
+                            type="text"
+                            id="location-input"
+                            class="form-control"
+                            name="location"
+                            placeholder="Enter a location"
+                            aria-label="Example text with button addon"
+                            aria-describedby="button-addon1"
+                        />
+                    </div>
+                    <!-- container for loading text and loader animation -->
+                    <div id="loading-container" hidden="">
+                        <p>Searching job descriptions...</p>
+                        <p>Can take up to one minute to complete</p>
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </div>
+            
+                    <!-- search button -->
+                    <button 
+                        onclick="document.getElementById('loading-container').removeAttribute('hidden')" 
+                        class="btn btn-primary btn-lg" 
+                        type="submit">
+                        Search
+                    </button>
+                </div>
+            </form>
+            
         </div>
     </div>
+</div>
 {% endblock %}
