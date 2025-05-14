@@ -42,7 +42,11 @@ def index():
 def list():
     session_data = session["keywords_data"]
     sorted_keywords_dict = dict(sorted(session_data.items(), key=lambda item: item[1], reverse=True))
-    return render_template("list.html", sorted_keywords_dict=sorted_keywords_dict)
+    return render_template("list.html",
+                           job_title=session["job_title"],
+                           location=session["location"],
+                           num_of_jobs = session["num_of_jobs"],
+                           sorted_keywords_dict=sorted_keywords_dict)
 
 
 @app.route("/charts")
@@ -54,7 +58,10 @@ def charts():
         chart_data.append([tech, count])
     
 
-    return render_template("charts.html", chart_data=chart_data)
+    return render_template("charts.html",
+                           job_title=session["job_title"],
+                           location=session["location"],
+                           chart_data=chart_data)
 
 
 # TODO: create 'About' route
@@ -73,16 +80,26 @@ def scrape_jobs():
         flash("Please enter a location")
         return redirect("/")
     
-    job_descriptions = scrape_job_descriptions(job_title, location, limit=50)
+    session["job_title"] = job_title
+    session["location"] = location
+    
+    job_descriptions = scrape_job_descriptions(job_title, location, limit=20)
     if job_descriptions == []:
-        return render_template("no-results.html")
+        return render_template("no-results.html",
+                               job_title=job_title,
+                               location=location,)
     else:
         keywords_dict = extract_total_keywords(job_descriptions)
 
+    session["num_of_jobs"] = job_descriptions[0]["descriptions"][-1]["index"]
     session["keywords_data"] = keywords_dict
-    session_data = session["keywords_data"]
-    sorted_keywords_dict = dict(sorted(session_data.items(), key=lambda item: item[1], reverse=True))
-    return render_template("list.html", sorted_keywords_dict=sorted_keywords_dict)
+
+    sorted_keywords_dict = dict(sorted(session["keywords_data"].items(), key=lambda item: item[1], reverse=True))
+    return render_template("list.html",
+                           job_title=job_title,
+                           location=location,
+                           num_of_jobs = session["num_of_jobs"],
+                           sorted_keywords_dict=sorted_keywords_dict)
 
 
 if __name__ == "__main__":

@@ -1,3 +1,6 @@
+/* TODO: create media query for adjusting margin & padding of main-content container on smaller screens */
+/* TODO: change color of footer to match header */
+
 :root {
     --main-logo-color: #00cad5;
     --secondary-logo-color: #ec6d76;
@@ -13,11 +16,16 @@
 }
 
 .main-content {
-    min-height: calc(100dvh - 327px);
+  /* header + main-content padding + footer */
+    min-height: calc(100dvh - (86px + 96px + 181px));
 }
 
 #loading-container p {
     margin-bottom: 0%;
+}
+
+.attribution {
+  font-size: 0.85em;
 }
 
 /* loader styles */
@@ -80,5 +88,3 @@
     transform: translate(24px, 0);
   }
 }
-
-/* TODO: create media query for adjusting margin & padding of main-content container on smaller screens */
