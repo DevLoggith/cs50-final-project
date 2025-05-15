@@ -17,11 +17,6 @@
     float: right;
 }
 
-.main-content {
-  /* header + main-content margin + footer */
-    min-height: calc(100dvh - (86px + 48px + 181px));
-}
-
 #loading-container p {
     margin-bottom: 0%;
 }
@@ -98,12 +93,4 @@
   100% {
     transform: translate(24px, 0);
   }
-}
-
-/* media queries */
-@media screen and (max-width: 768px) {
-  .main-content {
-  /* header + footer */
-    min-height: calc(100dvh - (86px + 202px));
-}
 }
