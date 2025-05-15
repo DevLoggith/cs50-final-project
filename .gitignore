@@ -27,3 +27,6 @@ build/
 
 # Ignore egg-info directories
 *.egg-info/
+
+# Ignore Mac DS_Store files
+.DS_Store

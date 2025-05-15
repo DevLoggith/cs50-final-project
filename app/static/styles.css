@@ -1,5 +1,7 @@
-/* TODO: create media query for adjusting margin & padding of main-content container on smaller screens */
+/* TODO: adjust margin for instruction <p> elements */
+/* TODO: create container for main page text */
 /* TODO: change color of footer to match header */
+/* TODO: readjust min-height once all other spacing changes are made */
 
 :root {
     --main-logo-color: #00cad5;
