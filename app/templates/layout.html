@@ -25,7 +25,7 @@
 	</head>
 
 	<body class="d-flex flex-column h-100">
-		<nav class="navbar m-0 mb-md-5 navbar-expand-md bg-body-tertiary">
+		<nav class="shadow-sm navbar m-0 mb-md-5 navbar-expand-md bg-body-tertiary">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="/">
 					<img
@@ -75,50 +75,51 @@
             {% block main %}{% endblock %}
         </main>
 		<footer class="mt-auto py-2 bg-body-tertiary">
-			<ul class="nav justify-content-center border-bottom pb-3 mb-3">
-				<li class="nav-item">
-					<a href="/" class="nav-link px-2 text-body-secondary">Home</a>
-				</li>
-				<li class="nav-item">
-					<a href="/list" class="nav-link px-2 text-body-secondary">Skills List</a>
-				</li>
-				<li class="nav-item">
-					<a href="/charts" class="nav-link px-2 text-body-secondary"
-						>Skills Charts</a
+			<div class="container-fluid">
+				<ul class="nav justify-content-center border-bottom pb-3 mb-3">
+					<li class="nav-item">
+						<a href="/" class="nav-link px-2 text-body-secondary">Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="/list" class="nav-link px-2 text-body-secondary">Skills List</a>
+					</li>
+					<li class="nav-item">
+						<a href="/charts" class="nav-link px-2 text-body-secondary"
+							>Skills Charts</a
+						>
+					</li>
+					<li class="nav-item">
+						<a href="/about" class="nav-link px-2 text-body-secondary">About</a>
+					</li>
+				</ul>
+				<p class="text-center text-body-secondary">
+					Created by
+					<a
+						rel="noopener"
+						href="https://github.com/DevLoggith"
+						target="_blank"
+						title="Logan Miklosovic's GitHub page"
+						>Logan Miklosovic</a
 					>
-				</li>
-				<li class="nav-item">
-					<a href="/about" class="nav-link px-2 text-body-secondary">About</a>
-				</li>
-			</ul>
-			<p class="text-center text-body-secondary">
-				Created by
-				<a
-					rel="noopener"
-					href="https://github.com/DevLoggith"
-					target="_blank"
-					title="Logan Miklosovic's GitHub page"
-					>Logan Miklosovic</a
-				>
-				2025
-			</p>
-			<p class="attribution text-center text-body-secondary">
-				Location data ©
-				<a
-					href="https://www.openstreetmap.org/copyright"
-					target="_blank"
-					>OpenStreetMap</a
-				> contributors, available under the
-				<a
-					href="https://opendatacommons.org/licenses/odbl/"
-					target="_blank">Open Database License</a
-				>. Geocoding provided by
-				<a
-					href="https://nominatim.org/"
-					target="_blank"
-					>Nominatim</a>.
-			</p>
-
+					2025
+				</p>
+				<p class="attribution text-center text-body-secondary">
+					Location data ©
+					<a
+						href="https://www.openstreetmap.org/copyright"
+						target="_blank"
+						>OpenStreetMap</a
+					> contributors, available under the
+					<a
+						href="https://opendatacommons.org/licenses/odbl/"
+						target="_blank">Open Database License</a
+					>. Geocoding provided by
+					<a
+						href="https://nominatim.org/"
+						target="_blank"
+						>Nominatim</a>.
+				</p>
+			</div>
 		</footer>
 	</body>
 </html>

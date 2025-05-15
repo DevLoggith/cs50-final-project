@@ -12,22 +12,26 @@
 <!-- injecting env variables to use in Nominatim API -->
 <script>const NOMINATIM_USER_AGENT = "{{ nominatim_user_agent }}";</script>
 
-<h1 class="display-1">
-    SkillSift
-</h1>
-<h2 class="display-6">
-    Find out what skills, technologies, and knowledge are most in demand for your
-    job
-</h2>
-<p class="lead">
-    Enter your chosen job title and location below and click search.
-    SkillSift will search local job postings and return to you a complete
-    list - and graphs - of the most in demand skills and technologies for your
-    chosen job.
-</p>
+<div class="main-text">
+    <h1 class="display-1">
+        SkillSift
+    </h1>
+    <h2 class="display-6">
+        Find out what skills, technologies, and knowledge are most in demand for your
+        job
+    </h2>
+    <!-- adjust bottom margin of h2.display-6 -->
+    <p class="instructions">
+        Enter your chosen job title and location below and click search.
+        SkillSift will search local job postings and return to you a complete
+        list - and graphs - of the most in demand skills and technologies for your
+        chosen job.
+    </p>
+    <!-- adjust bottom margin of p.instructions -->
+</div>
 
-<div class="container">
-    <div class="card bg-body-tertiary">
+<div class="search-card container">
+    <div class="shadow card bg-body-tertiary">
         <div class="card-body text-center">
             <form action="/scrape" method="post">
                 <div class="mb-3 d-flex flex-column align-items-center">
@@ -36,7 +40,7 @@
                         <input
                             autocomplete="off"
                             autofocus
-                            class="form-control w-auto"
+                            class="shadow-sm form-control w-auto"
                             name="job_title"
                             placeholder="Job Title"
                             type="text"
@@ -56,7 +60,7 @@
                         <input
                             type="text"
                             id="location-input"
-                            class="form-control"
+                            class="shadow-sm form-control"
                             name="location"
                             placeholder="Enter a location"
                             aria-label="Example text with button addon"
@@ -71,9 +75,12 @@
                     </div>
             
                     <!-- search button -->
+                     <!-- TODO:? swap out custom loader and animation for bs
+                                in-button spinner?
+                                https://getbootstrap.com/docs/5.3/components/spinners/#buttons -->
                     <button 
                         onclick="document.getElementById('loading-container').removeAttribute('hidden')" 
-                        class="btn btn-primary btn-lg" 
+                        class="shadow-sm btn btn-primary btn-lg" 
                         type="submit">
                         Search
                     </button>
