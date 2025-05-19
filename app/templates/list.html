@@ -5,13 +5,16 @@
 {% endblock %}
 
 {% block main %}
-    <h1 class="display-1">Skills List</h1>
-    <!-- TODO: adjust bottom margin of p.lead -->
-    <p class="lead">
-        A complete list of skills for {{ job_title }}s near {{ location }}.
-        From most requested to least requested, based on {{ num_of_jobs }}
-        different job postings.
-    </p>
+    <div id="main-text" class="mb-3">
+        <div id="title-text" class="mb-4 mb-md-5">
+            <h1 class="display-1">Skills List</h1>
+        </div>
+        <p class="lead">
+            A complete list of skills for {{ job_title }}s near {{ location }}.
+            From most requested to least requested, based on {{ num_of_jobs }}
+            different job postings.
+        </p>
+    </div>
     <table class="table table-striped">
         <thead class="table-dark">
             <tr>

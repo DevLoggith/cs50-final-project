@@ -3,6 +3,10 @@
     --secondary-logo-color: #ec6d76;
 }
 
+* {
+  color: #352f36;
+}
+
 #app-title {
   font-family: "Poetsen One", sans-serif;
   background: linear-gradient(90deg, var(--main-logo-color), var(--secondary-logo-color));
