@@ -85,7 +85,7 @@ function drawColumnChart(screenWidth) {
 			duration: 500,
 			easing: "out",
 		},
-		backgroundColor: "#f7f5f8"
+		backgroundColor: "#f0f5f6"
 	};
 
 	if (screenWidth < 768) {
@@ -137,7 +137,7 @@ function drawPieChart(screenWidth) {
 		title: "Tech Skills Donut Chart",
 		pieHole: 0.4,
 		sliceVisibilityThreshold: 1 / 64,
-		backgroundColor: "#f7f5f8"
+		backgroundColor: "#f0f5f6"
 	};
 
 	if (screenWidth < 992) {
