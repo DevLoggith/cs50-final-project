@@ -39,34 +39,40 @@
                 <div class="mb-3 d-flex flex-column align-items-center">
                     <!-- job title input -->
                     <div class="mb-3 w-auto">
+                        <label for="job-title-input" class="visually-hidden">Job Title</label>
                         <input
-                            autocomplete="off"
-                            autofocus
+                            id="job-title-input"
                             class="shadow-sm form-control w-auto"
                             name="job_title"
-                            placeholder="Job Title"
                             type="text"
+                            spellcheck="true"
+                            autocomplete="organization-title"
+                            autofocus
+                            placeholder="Job Title"
                         />
                     </div>
             
                     <!-- location input group -->
+                    <label for="location-input" class="visually-hidden">Location</label>
                     <div class="input-group mb-3 w-auto">
                         <button
+                            id="location-button"
                             class="btn btn-outline-secondary"
                             type="button"
-                            id="location-button"
                             title="Use my location"
+                            aria-label="Use my current location"
                         >
                             &#x1F4CD
                         </button>
                         <input
-                            type="text"
                             id="location-input"
                             class="shadow-sm form-control"
                             name="location"
+                            type="text"
+                            spellcheck="true"
+                            autocomplete="address-line1"
                             placeholder="Enter a location"
-                            aria-label="Example text with button addon"
-                            aria-describedby="button-addon1"
+                            aria-describedby="location-button"
                         />
                     </div>
                     <!-- container for loading text and loader animation -->
