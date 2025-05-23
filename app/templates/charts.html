@@ -14,15 +14,17 @@
 {% endblock %}
 
 {% block main %}
-    <div id="main-text">
-        <div id="title-text" class="mb-4 mb-md-5">
+    <article>
+        <header class="mb-4 mb-md-5">
             <h1 class="display-1">Skills Charts</h1>
-        </div>
-        <p class="lead">
-            Charts showing a visual representation of the most in demand technologies
-            for {{ job_title }}s near {{ location }}
-        </p>
-    </div>
+        </header>
+        <section>
+            <p class="lead">
+                Charts showing a visual representation of the most in demand technologies
+                for {{ job_title }}s near {{ location }}
+            </p>
+        </section>
+    </article>
     <div id="column_chart" class="chart-container" style="height: 500px"></div>
     <div id="pie_chart" class="chart-container" style="height: 700px"></div>
 {% endblock %}
