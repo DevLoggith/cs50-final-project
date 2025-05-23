@@ -2,6 +2,8 @@
 
 {% block head %}
     <script src="{{ url_for('static', filename='location.js') }}" defer></script>
+    <!-- injecting env variables to use in Nominatim API -->
+    <script>const NOMINATIM_USER_AGENT = "{{ nominatim_user_agent }}";</script>
     <script defer>
         // button loader state change
         document.addEventListener('DOMContentLoaded', function() {
@@ -25,9 +27,6 @@
 {% endblock %} 
 
 {% block main%}
-<!-- injecting env variables to use in Nominatim API -->
-<script>const NOMINATIM_USER_AGENT = "{{ nominatim_user_agent }}";</script>
-
 <article class="mb-3">
     <header class="mb-4 mb-md-5">
         <h1 id="app-title" class="display-1">
@@ -53,7 +52,6 @@
         <div class="card-body text-center">
             <form id="searchForm" action="/scrape" method="post">
                 <div class="mb-3 d-flex flex-column align-items-center">
-                    <!-- job title input -->
                     <div class="mb-3 w-auto">
                         <label for="job-title-input" class="visually-hidden">Job Title</label>
                         <input
@@ -68,7 +66,6 @@
                         />
                     </div>
             
-                    <!-- location input group -->
                     <label for="location-input" class="visually-hidden">Location</label>
                     <div class="input-group mb-3 w-auto">
                         <button
@@ -97,10 +94,7 @@
                         <p>Can take up to one minute to complete</p>
                     </div>
             
-                    <!-- search button -->
-                     <!-- TODO:? swap out custom loader and animation for bs
-                                in-button spinner?
-                                https://getbootstrap.com/docs/5.3/components/spinners/#buttons -->
+                     <!-- TODO: create onclick even to show loading container text -->
                     <button
                         onclick=""
                         id="searchButton"

@@ -1,4 +1,6 @@
 /* TODO: restyle loading-container text */
+/* TODO: restyle 'searching...' button text color */
+/* TODO: restyle 'searching...' button 'disabled' colors (secondary?) */
 
 :root {
     --main-logo-color: #00cad5;
@@ -31,10 +33,12 @@ body {
     float: right;
 }
 
+/* TODO: apply margin via Bootstrap instead? */
 #loading-container p {
     margin-bottom: 0%;
 }
 
+/* TODO: apply size via Bootstrap instead? */
 .attribution {
   font-size: 0.85em;
 }
