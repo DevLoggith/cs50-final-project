@@ -38,7 +38,7 @@
         </h2>
     </header>
     <section>
-        <p class="instructions lead">
+        <p class="lead">
             Enter your chosen job title and location below and click search.
             SkillSift will search local job postings and return to you a complete
             list - and graphs - of the most in demand skills and technologies for your
@@ -88,20 +88,18 @@
                             aria-describedby="location-button"
                         />
                     </div>
-                    <!-- container for loading text and loader animation -->
-                    <div id="loading-container" hidden="">
-                        <p>Searching job descriptions...</p>
-                        <p>Can take up to one minute to complete</p>
-                    </div>
-            
-                     <!-- TODO: create onclick even to show loading container text -->
                     <button
-                        onclick=""
+                        onclick="getElementById('loading-container').removeAttribute('hidden')"
                         id="searchButton"
-                        class="shadow-sm btn btn-primary btn-lg" 
+                        class="shadow-sm btn btn-lg" 
                         type="submit">
                         Search
                     </button>
+                    <!-- container for loading text and loader animation -->
+                    <div id="loading-container" hidden="">
+                        <p class="lead fs-6 pt-2">Searching job descriptions...</p>
+                        <p class="lead fs-6">Can take up to one minute to complete</p>
+                    </div>
                 </div>
             </form>
             
