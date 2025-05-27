@@ -1,7 +1,3 @@
-/* TODO: restyle loading-container text */
-/* TODO: restyle 'searching...' button text color */
-/* TODO: restyle 'searching...' button 'disabled' colors (secondary?) */
-
 :root {
     --main-logo-color: #00cad5;
     --secondary-logo-color: #ec6d76;
@@ -24,22 +20,37 @@ body {
   display: inline-block;
 }
 
-.btn-primary {
+#searchButton {
     background-color: var(--main-logo-color);
     border-color: var(--main-logo-color);
+    color: #f8f9fa;
+}
+
+#searchButton:focus {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+#searchButton:hover {
+  background-color: #00a9b3;
+  border-color: #00a9b3;
+}
+
+#searchButton:disabled {
+  background-color: var(--secondary-logo-color);
+  border-color: var(--secondary-logo-color);
+}
+
+#searchButton:disabled .spinner-border,
+#searchButton:disabled [role="status"] {
+    color: #f8f9fa;
 }
 
 #alert-close {
     float: right;
 }
 
-/* TODO: apply margin via Bootstrap instead? */
-#loading-container p {
-    margin-bottom: 0%;
-}
-
-/* TODO: apply size via Bootstrap instead? */
 .attribution {
-  font-size: 0.85em;
+  font-size: 0.80em;
 }
 
