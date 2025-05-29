@@ -16,6 +16,18 @@
 			crossorigin="anonymous"
 			defer
 		></script>
+		<script defer>
+			// active page toggler
+			document.addEventListener('DOMContentLoaded', function() {
+				const currentPage = document.body.dataset.currentPage;
+				const activeLink = document.querySelector(`[data-page="${currentPage}"]`);
+
+				if (activeLink) {
+					activeLink.classList.add('active', 'text-decoration-underline');
+					activeLink.setAttribute('aria-current', 'page');
+				}
+			});
+		</script>
 		<!-- app title font -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +41,7 @@
 		<link rel="icon" type="image/x-icon" href="/static/images/icon.ico" />
 	</head>
 
-	<body class="d-flex flex-column h-100">
+	<body class="d-flex flex-column h-100" data-current-page="{{ current_page }}">
 		<nav class="shadow-sm navbar m-0 navbar-expand-md bg-body-tertiary">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="/">
@@ -55,10 +67,10 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 					<div class="navbar-nav ms-auto">
-						<a class="nav-link active" aria-current="page" href="/">Home</a>
-						<a class="nav-link" href="/list">Skills List</a>
-						<a class="nav-link" href="/charts">Skills Charts</a>
-						<a class="nav-link" href="/about">About</a>
+						<a class="nav-link" data-page="home" href="/">Home</a>
+						<a class="nav-link" data-page="list" href="/list">Skills List</a>
+						<a class="nav-link" data-page="charts" href="/charts">Skills Charts</a>
+						<a class="nav-link" data-page="about" href="/about">About</a>
 					</div>
 				</div>
 			</div>
@@ -88,9 +100,7 @@
 						<a href="/list" class="nav-link px-2 text-body-secondary">Skills List</a>
 					</li>
 					<li class="nav-item">
-						<a href="/charts" class="nav-link px-2 text-body-secondary"
-							>Skills Charts</a
-						>
+						<a href="/charts" class="nav-link px-2 text-body-secondary">Skills Charts</a>
 					</li>
 					<li class="nav-item">
 						<a href="/about" class="nav-link px-2 text-body-secondary">About</a>
