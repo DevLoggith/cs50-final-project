@@ -34,7 +34,9 @@ def check_for_data(f):
 def index():
     # retrieve env variables and pass to font end JS
     nominatim_user_agent = os.getenv("NOMINATIM_USER_AGENT")
-    return render_template("index.html", nominatim_user_agent=nominatim_user_agent)
+    return render_template("index.html", 
+                           current_page="home",
+                           nominatim_user_agent=nominatim_user_agent)
 
 
 @app.route("/list", methods=["GET"])
@@ -43,6 +45,7 @@ def list():
     session_data = session["keywords_data"]
     sorted_keywords_dict = dict(sorted(session_data.items(), key=lambda item: item[1], reverse=True))
     return render_template("list.html",
+                           current_page="list",
                            job_title=session["job_title"],
                            location=session["location"],
                            num_of_jobs = session["num_of_jobs"],
@@ -59,6 +62,7 @@ def charts():
     
 
     return render_template("charts.html",
+                           current_page="charts",
                            job_title=session["job_title"],
                            location=session["location"],
                            chart_data=chart_data)

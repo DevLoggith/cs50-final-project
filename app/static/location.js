@@ -1,3 +1,4 @@
+// handles all location related logic for main form location field
 document
 	.getElementById("location-button")
 	.addEventListener("click", getLocation);
