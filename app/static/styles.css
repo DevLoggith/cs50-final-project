@@ -11,7 +11,7 @@ body {
   background-color: #f0f5f6;
 }
 
-#app-title {
+#app-title, #about-title {
   font-family: "Poetsen One", sans-serif;
   background: linear-gradient(90deg, var(--main-logo-color), var(--secondary-logo-color));
   background-clip: text;
@@ -48,6 +48,18 @@ body {
 
 #alert-close {
     float: right;
+}
+
+#about-text {
+  text-align: left;
+}
+
+#about-text section {
+  margin-bottom: 1em;
+}
+
+#about-text section h2 {
+  text-align: center;
 }
 
 .attribution {
