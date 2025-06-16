@@ -69,6 +69,10 @@ def charts():
 
 
 # TODO: create 'About' route
+@app.route("/about")
+def about():
+    return render_template("about.html",
+                           current_page="about")
 
 
 @app.route("/scrape", methods=["POST"])

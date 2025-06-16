@@ -27,83 +27,83 @@
 {% endblock %} 
 
 {% block main%}
-<article class="mb-3">
-    <header class="mb-4 mb-md-5">
-        <h1 id="app-title" class="display-1">
-            SkillSift
-        </h1>
-        <h2 class="fs-5">
-            Find out what skills, technologies, and knowledge are most in demand for your
-            job
-        </h2>
-    </header>
-    <section>
-        <p class="lead">
-            Enter your chosen job title and location below and click search.
-            SkillSift will search local job postings and return to you a complete
-            list - and graphs - of the most in demand skills and technologies for your
-            chosen job.
-        </p>
-    </section>
-</article>
+    <article class="mb-3">
+        <header class="mb-4 mb-md-5">
+            <h1 id="app-title" class="display-1">
+                SkillSift
+            </h1>
+            <h2 class="fs-5">
+                Find out what skills, technologies, and knowledge are most in demand for your
+                job
+            </h2>
+        </header>
+        <section>
+            <p class="lead">
+                Enter your chosen job title and location below and click search.
+                SkillSift will search local job postings and return to you a complete
+                list - and graphs - of the most in demand skills and technologies for your
+                chosen job.
+            </p>
+        </section>
+    </article>
 
-<div class="search-card container">
-    <div class="shadow card bg-body-tertiary">
-        <div class="card-body text-center">
-            <form id="searchForm" action="/scrape" method="post">
-                <div class="mb-3 d-flex flex-column align-items-center">
-                    <div class="mb-3 w-auto">
-                        <label for="job-title-input" class="visually-hidden">Job Title</label>
-                        <input
-                            id="job-title-input"
-                            class="shadow-sm form-control w-auto"
-                            name="job_title"
-                            type="text"
-                            spellcheck="true"
-                            autocomplete="organization-title"
-                            autofocus
-                            placeholder="Job Title"
-                        />
-                    </div>
-            
-                    <label for="location-input" class="visually-hidden">Location</label>
-                    <div class="input-group mb-3 w-auto">
+    <div class="search-card container">
+        <div class="shadow card bg-body-tertiary">
+            <div class="card-body text-center">
+                <form id="searchForm" action="/scrape" method="post">
+                    <div class="mb-3 d-flex flex-column align-items-center">
+                        <div class="mb-3 w-auto">
+                            <label for="job-title-input" class="visually-hidden">Job Title</label>
+                            <input
+                                id="job-title-input"
+                                class="shadow-sm form-control w-auto"
+                                name="job_title"
+                                type="text"
+                                spellcheck="true"
+                                autocomplete="organization-title"
+                                autofocus
+                                placeholder="Job Title"
+                            />
+                        </div>
+                
+                        <label for="location-input" class="visually-hidden">Location</label>
+                        <div class="input-group mb-3 w-auto">
+                            <button
+                                id="location-button"
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                title="Use my location"
+                                aria-label="Use my current location"
+                            >
+                                &#x1F4CD
+                            </button>
+                            <input
+                                id="location-input"
+                                class="shadow-sm form-control"
+                                name="location"
+                                type="text"
+                                spellcheck="true"
+                                autocomplete="address-line1"
+                                placeholder="Enter a location"
+                                aria-describedby="location-button"
+                            />
+                        </div>
                         <button
-                            id="location-button"
-                            class="btn btn-outline-secondary"
-                            type="button"
-                            title="Use my location"
-                            aria-label="Use my current location"
-                        >
-                            &#x1F4CD
+                            onclick="getElementById('loading-container').removeAttribute('hidden')"
+                            id="searchButton"
+                            class="shadow-sm btn btn-lg" 
+                            type="submit">
+                            Search
                         </button>
-                        <input
-                            id="location-input"
-                            class="shadow-sm form-control"
-                            name="location"
-                            type="text"
-                            spellcheck="true"
-                            autocomplete="address-line1"
-                            placeholder="Enter a location"
-                            aria-describedby="location-button"
-                        />
+                        <!-- container for loading text and loader animation -->
+                        <div id="loading-container" hidden="">
+                            <p class="lead fs-6 pt-2">Searching job descriptions...</p>
+                            <p class="lead fs-6">Can take up to one minute to complete</p>
+                        </div>
                     </div>
-                    <button
-                        onclick="getElementById('loading-container').removeAttribute('hidden')"
-                        id="searchButton"
-                        class="shadow-sm btn btn-lg" 
-                        type="submit">
-                        Search
-                    </button>
-                    <!-- container for loading text and loader animation -->
-                    <div id="loading-container" hidden="">
-                        <p class="lead fs-6 pt-2">Searching job descriptions...</p>
-                        <p class="lead fs-6">Can take up to one minute to complete</p>
-                    </div>
-                </div>
-            </form>
-            
+                </form>
+                
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

@@ -50,6 +50,14 @@ body {
     float: right;
 }
 
+#about-text {
+  text-align: left;
+}
+
+#about-text p {
+  margin-bottom: 1em;
+}
+
 .attribution {
   font-size: 0.80em;
 }
