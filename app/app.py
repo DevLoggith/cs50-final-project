@@ -68,7 +68,6 @@ def charts():
                            chart_data=chart_data)
 
 
-# TODO: create 'About' route
 @app.route("/about")
 def about():
     return render_template("about.html",
@@ -91,13 +90,16 @@ def scrape_jobs():
     session["job_title"] = job_title
     session["location"] = location
     
-    job_descriptions = scrape_job_descriptions(job_title, location, limit=20)
+    job_descriptions = scrape_job_descriptions(job_title, location, limit=50)
     if job_descriptions == []:
         return render_template("no-results.html",
                                job_title=job_title,
                                location=location,)
     else:
         keywords_dict = extract_total_keywords(job_descriptions)
+        if keywords_dict == {}:
+            return render_template("no-keywords.html", job_title=job_title)
+    
 
     session["num_of_jobs"] = job_descriptions[0]["descriptions"][-1]["index"]
     session["keywords_data"] = keywords_dict
