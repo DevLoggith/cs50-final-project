@@ -106,6 +106,7 @@ def scrape_jobs():
 
     sorted_keywords_dict = dict(sorted(session["keywords_data"].items(), key=lambda item: item[1], reverse=True))
     return render_template("list.html",
+                           current_page="list",
                            job_title=job_title,
                            location=location,
                            num_of_jobs = session["num_of_jobs"],
