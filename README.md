@@ -4,7 +4,7 @@ Science course by Harvard.
 
 Inspired by what I wish would have existed when I was starting my journey into
 software engineering, I created SkillSift. It's a web app that takes a users job
-title and location then scrapes their local job boards, returning a list and
+title and location then searches their local job boards, returning a list and
 graphs of the most sought after tech skills for their locale.
 
 Reverse engineering the job search and first starting with what skills and knowledge
