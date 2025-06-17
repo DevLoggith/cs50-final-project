@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %} 
+    No Keywords
+{% endblock %}
+
+{% block main %}
+    <h1>No Results</h1>
+    <p>
+        No technical keywords found in descriptions for {{ job_title }}s.
+    </p>
+    <p>
+        Please try searching again for a different job title.
+    </p>
+    <h2>
+        <a href="/">
+            Home
+        </a>
+    </h2>
+{% endblock %}
