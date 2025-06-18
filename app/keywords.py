@@ -1,6 +1,5 @@
 """ Keywords set used for keyword extraction and matching"""
 
-
 keywords_set = {
     'aircrack-ng','aks', 'algorand', 'anaconda', 'android', 'angular', 'ansible',
     'apache', 'appium', 'arangodb', 'arcore', 'arduino', 'arkit', 'aseprite',
@@ -20,11 +19,11 @@ keywords_set = {
     'jenkins', 'jest', 'jira', 'jmeter', 'john the ripper', 'jquery', 'json', 
     'julia', 'jupyter', 'jwt', 'kafka', 'katalon studio', 'keras', 'knime', 'koa',
     'kotlin', 'kubernetes', 'lambda', 'laravel', 'lightgbm', 'linux', 'loadrunner',
-    'lua', 'macos', 'matplotlib', 'maya', 'mercurial', 'metasploit', 'mocha',
-    'mongodb', 'mysql', 'neo4j', 'nessus', 'nestjs', 'next.js', 'nginx', 'nltk',
-    'node', 'nosqlmariadb', 'numpy', 'nuxt.js', 'oauth', 'objective-c', 'opencl',
-    'opencv', 'openvas', 'oracle', 'pandas', 'perl', 'phaser', 'phoenix', 'php',
-    'polkadot', 'postgresql', 'postman', 'power bi', 'powershell', 'prometheus',
+    'lua', 'macos', 'mariadb', 'matplotlib', 'maya', 'mercurial', 'metasploit',
+    'microsoft sql server', 'mocha', 'mongodb', 'mysql', 'neo4j', 'nessus', 'nestjs',
+    'next.js', 'nginx', 'nltk', 'node', 'numpy', 'nuxt.js', 'oauth', 'objective-c',
+    'opencl', 'opencv', 'openvas', 'oracle', 'pandas', 'perl', 'phaser', 'phoenix',
+    'php', 'polkadot', 'postgresql', 'postman', 'power bi', 'powershell', 'prometheus',
     'pulsar', 'puppet', 'puppeteer', 'pygame', 'python', 'pytorch', 'r', 'rabbitmq',
     'rapidminer', 'rds', 'react' 'react native', 'redis', 'redux', 'rest', 'ruby',
     'ruby on rails', 'rust', 's3', 'sass', 'scala', 'scikit-learn', 'scssreact',
