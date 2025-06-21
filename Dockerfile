@@ -21,5 +21,5 @@ RUN pip install -r requirements.txt
 # Copy app
 COPY . .
 
-# Start command
-CMD ["gunicorn", "--chdir", "/app", "app.app:app", "--host", "0.0.0.0", "--port", "10000"]
+# Use Render's actual working directory
+CMD ["gunicorn", "--chdir", "/opt/render/project/src", "app.app:app", "--host", "0.0.0.0", "--port", "10000"]
