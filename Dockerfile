@@ -14,15 +14,15 @@ RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 # Set display port to avoid crash
 ENV DISPLAY=:99
 
-# Set working directory
-WORKDIR /app
+# Set working directory to the app folder where all your Python files are
+WORKDIR /app/app
 
 # Install Python dependencies
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY requirements.txt ../
+RUN pip install -r ../requirements.txt
 
-# Copy app
-COPY . .
+# Copy the entire project
+COPY . ..
 
-# Fix the gunicorn command - use --bind instead of --host and --port
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app.app:app"]
+# Now run gunicorn from the app directory where scrape.py is located
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
