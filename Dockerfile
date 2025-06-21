@@ -14,6 +14,9 @@ RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 # Set display port to avoid crash
 ENV DISPLAY=:99
 
+# Set working directory
+WORKDIR /app
+
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip install -r requirements.txt
@@ -21,5 +24,5 @@ RUN pip install -r requirements.txt
 # Copy app
 COPY . .
 
-# Use Render's actual working directory
-CMD ["gunicorn", "--chdir", "/opt/render/project/src", "app.app:app", "--host", "0.0.0.0", "--port", "10000"]
+# Fix the gunicorn command - use --bind instead of --host and --port
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app.app:app"]
