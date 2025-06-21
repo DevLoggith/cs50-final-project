@@ -22,4 +22,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Start command
-CMD ["gunicorn", "app.app:app", "--host", "0.0.0.0", "--port", "10000"]
+CMD ["gunicorn", "--chdir", "/app", "app.app:app", "--host", "0.0.0.0", "--port", "10000"]
