@@ -6,10 +6,6 @@ import secrets
 from scrape import scrape_job_descriptions
 from extract import extract_total_keywords
 
-import logging
-logging.basicConfig(level=logging.INFO)
-print(f"Environment variables: {dict(os.environ)}")
-
 load_dotenv()
 
 app = Flask(__name__)
