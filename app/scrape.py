@@ -43,7 +43,6 @@ def initialize_browser():
     options.add_argument('--disable-web-security')
     options.add_argument('--disable-features=TranslateUI')
     options.add_argument('--disable-ipc-flooding-protection')
-    options.add_argument('--single-process')
     options.add_argument('--renderer-process-limit=1')
     options.add_argument('--max-active-webgl-contexts=1')
     options.add_argument('--disable-accelerated-2d-canvas')
@@ -51,6 +50,8 @@ def initialize_browser():
     options.add_argument('--disable-accelerated-mjpeg-decode')
     options.add_argument('--disable-app-list-dismiss-on-blur')
     options.add_argument('--disable-accelerated-video-decode')
+    options.add_argument('--disable-setuid-sandbox')
+    options.add_argument('--disable-background-networking')
 
     options.add_argument('--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36')
     
