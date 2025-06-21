@@ -90,7 +90,7 @@ def scrape_jobs():
     session["job_title"] = job_title
     session["location"] = location
     
-    job_descriptions = scrape_job_descriptions(job_title, location, limit=50)
+    job_descriptions = scrape_job_descriptions(job_title, location, limit=20)
     if job_descriptions == []:
         return render_template("no-results.html",
                                job_title=job_title,
