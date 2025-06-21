@@ -52,6 +52,13 @@ def initialize_browser():
     options.add_argument('--disable-accelerated-video-decode')
     options.add_argument('--disable-setuid-sandbox')
     options.add_argument('--disable-background-networking')
+    options.add_argument('--aggressive-cache-discard')
+    options.add_argument('--disable-background-timer-throttling')
+    options.add_argument('--disable-backgrounding-occluded-windows')
+    options.add_argument('--disable-renderer-backgrounding')
+    options.add_argument('--disable-features=TranslateUI,BlinkGenPropertyTrees')
+    options.add_argument('--disable-default-apps')
+    options.add_argument('--disable-sync')
 
     options.add_argument('--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36')
     

@@ -25,4 +25,4 @@ RUN pip install -r ../requirements.txt
 COPY . ..
 
 # Now run gunicorn from the app directory where scrape.py is located
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--workers=1", "--timeout=300", "--worker-class=sync", "--max-requests=1", "--max-requests-jitter=1", "app:app"]
