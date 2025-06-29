@@ -93,32 +93,59 @@ to increase readability and create a more positive UX.
 used elements used on a web page. From setting default font types and text size,
 to removing the default margins on elements and default list styles.
 - **styles.css**: Most of the styling is handled though the Bootstrap framework,
-but there are a few custom styles that needed to be defined in this file. Things like:
+but there are a few custom styles that needed to be defined in this file. Things
+like:
     - Main app title font and colors
-    - Search button colors, and states
+    - Search button colors, and state styling
     - Alert close button for the message banners
     - Page attribution font size
-- **layout.html**: The main template that all the other template files are extended off of, containing the structure of things that are the same across all templates such as; the header and navigation, Flask flash messages, the main content container that holds every page's content, and the footer and navigation. This also takes care of linking the Bootstrap framework, app title font, and stylesheets. It lastly contains a small bit of logic to determine what page is active and highlights that navigation menu item for the user.
-- **index.html**: Contains the app title, description, and main search form. It also holds the Nominatim user agent for passing along with the API call, logic for changing the state of the search button once clicked and a search is running, and an onclick event that triggers "loading container" text to appear for a better UX.
-- **list.html**: A simple page that populates an HTML table with keyword and frequency key/value pairs passed in from either the `"/scrape"` or `"/list"` route. It also uses the users job title and location data as well as the number of job descriptions that were searched to create a dynamic description of the table
-- **charts.html**: This file holds links to the Google Charts library and `charts.js`, creates a variable to hold the chart data passed in from the `"/charts"` Flask route, and creates 2 containers to hold the charts rendered by `charts.js`. Just like in `list.html`, it also uses the users job title and location data as well as the number of job descriptions that were searched to create a dynamic description of the charts.
-- **about.html**: Provides a bit of background on my path into software development and the choices I made in developing this project
-- **no-keywords.html & no-results.html**: Two error pages that handle alerting the user to errors when either no keywords are found for the entered job title, or there are no jobs found for the job title an location entered, respectively. Similar to `list.html` and `charts.html`, they also use templating with the users job title and location data to dynamically provide info about the error.
-- **.gitignore**: Contains a list of directories and file types for Git to ignore when syncing with GitHub
-- **Dockerfile**: File used to set the parameters for and create a Docker image (used in my Docker-based deployment on [Render](https://render.com/))
+- **layout.html**: The main template that all the other template files are extended
+off of, containing the structure of things that are the same across all templates
+such as; the header and navigation, Flask flash messages, the main content container
+that holds every page's content, and the footer and navigation. This also takes
+care of linking the Bootstrap framework, app title font, and stylesheets. It
+lastly contains a small bit of logic to determine what page is active and highlights
+that navigation menu item for the user.
+- **index.html**: Contains the app title, description, and main search form. It
+also holds the Nominatim user agent for passing along with the API call, logic
+for changing the state of the search button once clicked and a search is running,
+and an onclick event that triggers "loading container" text to appear for a better
+UX.
+- **list.html**: A simple page that populates an HTML table with keyword and
+frequency key/value pairs passed in from either the `"/scrape"` or `"/list"` route.
+It also uses the users job title and location data as well as the number of job
+descriptions that were searched to create a dynamic description of the table
+- **charts.html**: This file holds links to the Google Charts library and
+`charts.js`, creates a variable to hold the chart data passed in from the `"/charts"`
+Flask route, and creates 2 containers to hold the charts rendered by `charts.js`.
+Just like in `list.html`, it also uses the users job title and location data as
+well as the number of job descriptions that were searched to create a dynamic
+description of the charts.
+- **about.html**: Provides a bit of background on my path into software development
+and the choices I made in developing this project
+- **no-keywords.html & no-results.html**: Two error pages that handle alerting
+the user to errors when either no keywords are found for the entered job title,
+or there are no jobs found for the job title an location entered, respectively.
+Similar to `list.html` and `charts.html`, they also use templating with the users
+job title and location data to dynamically provide info about the error.
+- **.gitignore**: Contains a list of directories and file types for Git to ignore
+when syncing with GitHub
+- **Dockerfile**: File used to set the parameters for and create a Docker image
+(used in my Docker-based deployment on [Render](https://render.com/))
 - **requirements.txt**: Includes all dependencies needed for the application to run.
-- **README.md**: The file that explains all the other files, including itself, which explains all the other files, including itself, which exp---[stack overflow].
+- **README.md**: The file that explains all the other files, including itself,
+which explains all the other files, including itself, which exp---[stack overflow].
 ### Design Choices:
-- Python/Flask
-- No database
-- Modularized code
-    - extract.py
-    - keywords.py
-    - scrape.py
-    - charts.js
-    - location.js
-    - reset-2025.css
-- Typing and custom type class
-- Selenium over Beautifulsoup or Scrapy
-- Utilizing a `keywords.py` file containing a large set of keywords over a
-trained AI or NLP library
+**Python/Flask**: I chose to go with Python and Flask due to its flexibility, lightweight nature, and board support of many different frameworks and libraries.  
+**No database**: I wanted to keep the app simple and not persist any user data or any of the collected data from the job board site. I found that utilizing Flask Session storage was enough to hold the data I needed as long as the browser/tab is open. This also simplified the development and cut down on production time, though users profiles and a simple SQLite db can be set up in a future expansion.  
+**Modularized code**:  
+    - extract.py   
+    - keywords.py  
+    - scrape.py  
+    - charts.js  
+    - location.js  
+    - reset-2025.css    
+**Typing and custom type class**:  
+**Selenium over Beautifulsoup or Scrapy**:  
+Utilizing a `keywords.py` file containing a large set of keywords over a trained
+AI or NLP library
