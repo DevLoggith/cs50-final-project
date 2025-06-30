@@ -138,14 +138,8 @@ which explains all the other files, including itself, which exp---[stack overflo
 ### Design Choices:
 **Python/Flask**: I chose to go with Python and Flask due to its flexibility, lightweight nature, and board support of many different frameworks and libraries.  
 **No database**: I wanted to keep the app simple and not persist any user data or any of the collected data from the job board site. I found that utilizing Flask Session storage was enough to hold the data I needed as long as the browser/tab is open. This also simplified the development and cut down on production time, though users profiles and a simple SQLite db can be set up in a future expansion.  
-**Modularized code**:  
-    - extract.py   
-    - keywords.py  
-    - scrape.py  
-    - charts.js  
-    - location.js  
-    - reset-2025.css    
-**Typing and custom type class**:  
-**Selenium over Beautifulsoup or Scrapy**:  
-Utilizing a `keywords.py` file containing a large set of keywords over a trained
-AI or NLP library
+**Modularized code**: I want to keep code/functions focused on as much of a single purpose as possible and keep functionality confined to their own separate files. This makes reading through and debugging much easier, along with the ability to only load code and scripts when necessary link in the case with `charts.js` or `location.js`.     
+**Typing and custom type class**: The data structure created and returned in `scrape.py` was a bit confusing so I utilized the Python Typing library to create a custom type class and provide typing on some of the functions that could use more clarification  
+**Selenium over Beautifulsoup or Scrapy**: Selenium allowed me to include waits and just overall more carefully and gently navigate sites. It also integrates nicely with chrome and chromedrivers.   
+**Utilizing a `keywords.py` file containing a large set of keywords over a trained
+AI or NLP library**: I first attempted to utilize Ollama to parse returned job description text, and while a viable option (and one I want to look into in the future) I feel like it went beyond the scope of this project for now. Same thing for utilizing an NLP library like NLTK or spaCy. Future iterations could definitely incorporate one of these options to improve the accuracy and reliability of search results.
