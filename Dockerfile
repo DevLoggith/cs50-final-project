@@ -15,7 +15,7 @@ RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 ENV DISPLAY=:99
 
 # Set working directory to the app folder where all your Python files are
-WORKDIR /app/app
+WORKDIR /cs50_final/app
 
 # Install Python dependencies
 COPY requirements.txt ../
