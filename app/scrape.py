@@ -146,6 +146,7 @@ def scrape_job_descriptions(job_title: str, location: str, limit=100) -> JobsLis
     
     try:
         logger.info("Loading page...")
+        # TODO: find a new target website (or API) as Jora isn't available in the US anymore
         browser.get("https://us.jora.com/")
         
         search(browser, wait, job_title, location)
