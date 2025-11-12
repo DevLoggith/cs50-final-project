@@ -1,4 +1,7 @@
 # CS50 Final Project - SkillSift
+## Update: 
+- **Current status:** This project is no longer operational and now exists as a proof-of-concept
+- **Reason:** The target website is no longer operational and I'm leaving this project as-is as more of an illustration of my knowledge and abilities at the time
 ## Video Demo:  [YouTube link](https://youtu.be/oF-0qjf6SEw)
 ## Description:
 This is my submission for the final project of the CS50x: Intro to Computer
@@ -8,7 +11,7 @@ Inspired by what I wish would have existed when I was starting my journey into
 software engineering, I created SkillSift. It's a web app that takes a users job
 title and location then searches their local job boards, returning a list and
 graphs of the most requested technologies,  tech skills, and knowledge for their
-local market.
+local market. 
 ### Files:
 - **app.py**: Nested inside the "app" folder, this is what's referenced and called
 to actually execute the program. Such as `python app.py` from the terminal or
