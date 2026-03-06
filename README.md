@@ -1,7 +1,8 @@
 # CS50 Final Project - SkillSift
 ## Update: 
-- **Current status:** This project is no longer operational and now exists as a proof-of-concept
-- **Reason:** The target website is no longer operational and I'm leaving this project as-is as more of an illustration of my knowledge and abilities at the time
+- **Current status:** This project is currently not operational as the target website is
+no longer operational in the US. An alternative will need to be found as mentioned
+in [issue #76](https://github.com/DevLoggith/cs50-final-project/issues/76)
 ## Video Demo:  [YouTube link](https://youtu.be/oF-0qjf6SEw)
 ## Description:
 This is my submission for the final project of the CS50x: Intro to Computer
