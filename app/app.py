@@ -3,18 +3,19 @@ from dotenv import load_dotenv
 from flask import Flask, flash, redirect, render_template, request, session
 from functools import wraps
 import secrets
-from scrape import scrape_job_descriptions
+from jobspy import scrape_jobs
+from clean import clean_job_description
 from extract import extract_total_keywords
 
 load_dotenv()
 
 app = Flask(__name__)
-# generates a new session key each time the program is run
+"""generates a new session key each time the program is run"""
 app.config["SECRET_KEY"] = secrets.token_hex(16)
 
 @app.after_request
 def after_request(response):
-    # Ensure responses aren't cached
+    """Ensure responses aren't cached"""
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
@@ -32,7 +33,7 @@ def check_for_data(f):
 
 @app.route("/")
 def index():
-    # retrieve env variables and pass to font end JS
+    """retrieve env variables and pass to font end JS"""
     nominatim_user_agent = os.getenv("NOMINATIM_USER_AGENT")
     return render_template("index.html", 
                            current_page="home",
@@ -75,7 +76,7 @@ def about():
 
 
 @app.route("/scrape", methods=["POST"])
-def scrape_jobs():
+def search_jobs():
     job_title = request.form.get("job_title")
     location = request.form.get("location")
 
