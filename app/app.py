@@ -1,17 +1,19 @@
 import os
-from dotenv import load_dotenv
-from flask import Flask, flash, redirect, render_template, request, session
-from functools import wraps
 import secrets
-from jobspy import scrape_jobs
+from functools import wraps
+
 from clean import clean_job_description
+from dotenv import load_dotenv
 from extract import extract_total_keywords
+from flask import Flask, flash, redirect, render_template, request, session
+from jobspy import scrape_jobs
 
 load_dotenv()
 
 app = Flask(__name__)
 """generates a new session key each time the program is run"""
 app.config["SECRET_KEY"] = secrets.token_hex(16)
+
 
 @app.after_request
 def after_request(response):
@@ -21,6 +23,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+
 def check_for_data(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -28,6 +31,7 @@ def check_for_data(f):
             flash("Please run a search first to generate data", "error")
             return redirect("/")
         return f(*args, **kwargs)
+
     return decorated_function
 
 
@@ -35,22 +39,26 @@ def check_for_data(f):
 def index():
     """retrieve env variables and pass to font end JS"""
     nominatim_user_agent = os.getenv("NOMINATIM_USER_AGENT")
-    return render_template("index.html", 
-                           current_page="home",
-                           nominatim_user_agent=nominatim_user_agent)
+    return render_template(
+        "index.html", current_page="home", nominatim_user_agent=nominatim_user_agent
+    )
 
 
 @app.route("/list", methods=["GET"])
 @check_for_data
 def list():
     session_data = session["keywords_data"]
-    sorted_keywords_dict = dict(sorted(session_data.items(), key=lambda item: item[1], reverse=True))
-    return render_template("list.html",
-                           current_page="list",
-                           job_title=session["job_title"],
-                           location=session["location"],
-                           num_of_jobs = session["num_of_jobs"],
-                           sorted_keywords_dict=sorted_keywords_dict)
+    sorted_keywords_dict = dict(
+        sorted(session_data.items(), key=lambda item: item[1], reverse=True)
+    )
+    return render_template(
+        "list.html",
+        current_page="list",
+        job_title=session["job_title"],
+        location=session["location"],
+        num_of_jobs=session["num_of_jobs"],
+        sorted_keywords_dict=sorted_keywords_dict,
+    )
 
 
 @app.route("/charts")
@@ -60,19 +68,19 @@ def charts():
     chart_data = []
     for tech, count in data.items():
         chart_data.append([tech, count])
-    
 
-    return render_template("charts.html",
-                           current_page="charts",
-                           job_title=session["job_title"],
-                           location=session["location"],
-                           chart_data=chart_data)
+    return render_template(
+        "charts.html",
+        current_page="charts",
+        job_title=session["job_title"],
+        location=session["location"],
+        chart_data=chart_data,
+    )
 
 
 @app.route("/about")
 def about():
-    return render_template("about.html",
-                           current_page="about")
+    return render_template("about.html", current_page="about")
 
 
 @app.route("/scrape", methods=["POST"])
@@ -83,30 +91,32 @@ def search_jobs():
     if not job_title:
         flash("Please enter a job title")
         return redirect("/")
-    
+
     if not location:
         flash("Please enter a location")
         return redirect("/")
-    
+
     session["job_title"] = job_title
     session["location"] = location
-    
+
     jobs_df = scrape_jobs(
         site_name=["indeed", "linkedin"],
         search_term=session["job_title"],
         location=session["location"],
         results_wanted=30,
         hours_old=168,
-        country_indeed="USA"
+        country_indeed="USA",
     )
 
     cleaned_series = jobs_df["description"].dropna().apply(clean_job_description)
     job_descriptions = cleaned_series.to_list()
 
     if job_descriptions == []:
-        return render_template("no-results.html",
-                               job_title=job_title,
-                               location=location,)
+        return render_template(
+            "no-results.html",
+            job_title=job_title,
+            location=location,
+        )
     else:
         keywords_dict = extract_total_keywords(job_descriptions)
         if keywords_dict == {}:
@@ -115,13 +125,17 @@ def search_jobs():
     session["num_of_jobs"] = len(job_descriptions)
     session["keywords_data"] = keywords_dict
 
-    sorted_keywords_dict = dict(sorted(session["keywords_data"].items(), key=lambda item: item[1], reverse=True))
-    return render_template("list.html",
-                           current_page="list",
-                           job_title=job_title,
-                           location=location,
-                           num_of_jobs = session["num_of_jobs"],
-                           sorted_keywords_dict=sorted_keywords_dict)
+    sorted_keywords_dict = dict(
+        sorted(session["keywords_data"].items(), key=lambda item: item[1], reverse=True)
+    )
+    return render_template(
+        "list.html",
+        current_page="list",
+        job_title=job_title,
+        location=location,
+        num_of_jobs=session["num_of_jobs"],
+        sorted_keywords_dict=sorted_keywords_dict,
+    )
 
 
 if __name__ == "__main__":
