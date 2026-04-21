@@ -1,8 +1,4 @@
 # CS50 Final Project - SkillSift
-## Update: 
-- **Current status:** This project is currently not operational as the target website is
-no longer operational in the US. An alternative will need to be found as mentioned
-in [issue #76](https://github.com/DevLoggith/cs50-final-project/issues/76)
 ## Video Demo:  [YouTube link](https://youtu.be/oF-0qjf6SEw)
 ## Description:
 This is my submission for the final project of the CS50x: Intro to Computer
@@ -25,43 +21,8 @@ This file contains the main logic for the  program to run:
     - Calling imported functions to take that user data and perform the search
     - Taking that user data and data returned from the search and storing it in
     a Flask Session to serve to the different rendered pages.
-- **scrape.py**: This is the file that contains all the logic to go out and
-search the job board and return a list of jobs containing the job title searched
-for, and a list of job descriptions matching that job title. That structure looks
-like this:
-
-```JSON
-[
-    {
-        "job_title": "",
-        "descriptions": 
-        [
-            {
-                "index": 1,
-                "description": ""
-            },
-            {
-                "index": 2,
-                "description": ""
-            }
-            ...
-        ]
-    }
-]
-```
-
-It incorporates Selenium with Chrome to navigate the page carefully as to not
-overload it; filling in and submitting the search form using the user inputted
-data passed in via the `"/scrape"` route in `app.py`, navigating those results
-and parsing each returned job description, and navigating to subsequent pages if
-need be. When each job description is parsed, before it gets added to the jobs
-list, it's cleaned to ensure all letters are lowercased, any punctuation or
-characters that would not be used in a tech keyword are removed (baring "." like
-in ".NET" or "#" in "C#"), and any additional whitespace is also removed. Logging
-and error handling is also incorporated to provide progress updates and more
-descriptive error messages throughout the runtime of the program.
 - **extract.py**: This file contains two functions; the main function that takes
-in the jobs list returned in scrape.py and returns a dictionary of keywords and
+in the descriptions list returned from `scrape_jobs()` in `app.py` and returns a dictionary of keywords and
 how many job descriptions each keyword appears in, and a helper function that
 finds the relevant keywords in each description and adds them to a Python set.
 This assures that each keyword found is only counted once per job description.
@@ -142,8 +103,6 @@ which explains all the other files, including itself, which exp---[stack overflo
 ### Design Choices:
 **Python/Flask**: I chose to go with Python and Flask due to its flexibility, lightweight nature, and board support of many different frameworks and libraries.  
 **No database**: I wanted to keep the app simple and not persist any user data or any of the collected data from the job board site. I found that utilizing Flask Session storage was enough to hold the data I needed as long as the browser/tab is open. This also simplified the development and cut down on production time, though users profiles and a simple SQLite db can be set up in a future expansion.  
-**Modularized code**: I want to keep code/functions focused on as much of a single purpose as possible and keep functionality confined to their own separate files. This makes reading through and debugging much easier, along with the ability to only load code and scripts when necessary link in the case with `charts.js` or `location.js`.     
-**Typing and custom type class**: The data structure created and returned in `scrape.py` was a bit confusing so I utilized the Python Typing library to create a custom type class and provide typing on some of the functions that could use more clarification  
-**Selenium over Beautifulsoup or Scrapy**: Selenium allowed me to include waits and just overall more carefully and gently navigate sites. It also integrates nicely with chrome and chromedrivers.   
+**Modularized code**: I want to keep code/functions focused on as much of a single purpose as possible and keep functionality confined to their own separate files. This makes reading through and debugging much easier, along with the ability to only load code and scripts when necessary link in the case with `charts.js` or `location.js`. 
 **Utilizing a `keywords.py` file containing a large set of keywords over a trained
 AI or NLP library**: I first attempted to utilize Ollama to parse returned job description text, and while a viable option (and one I want to look into in the future) I feel like it went beyond the scope of this project for now. Same thing for utilizing an NLP library like NLTK or spaCy. Future iterations could definitely incorporate one of these options to improve the accuracy and reliability of search results.

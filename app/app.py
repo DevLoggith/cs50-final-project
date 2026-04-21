@@ -124,9 +124,8 @@ def search_jobs():
 
     session["num_of_jobs"] = len(job_descriptions)
     session["keywords_data"] = keywords_dict
-
-    sorted_keywords_dict = dict(
-        sorted(session["keywords_data"].items(), key=lambda item: item[1], reverse=True)
+    sorted_keywords_dict = sorted(
+        session["keywords_data"].items(), key=lambda item: item[1], reverse=True
     )
     return render_template(
         "list.html",
