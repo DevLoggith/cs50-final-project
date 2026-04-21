@@ -91,7 +91,18 @@ def search_jobs():
     session["job_title"] = job_title
     session["location"] = location
     
-    job_descriptions = scrape_job_descriptions(job_title, location, limit=20)
+    jobs_df = scrape_jobs(
+        site_name=["indeed", "linkedin"],
+        search_term=session["job_title"],
+        location=session["location"],
+        results_wanted=30,
+        hours_old=168,
+        country_indeed="USA"
+    )
+
+    cleaned_series = jobs_df["description"].dropna().apply(clean_job_description)
+    job_descriptions = cleaned_series.to_list()
+
     if job_descriptions == []:
         return render_template("no-results.html",
                                job_title=job_title,
@@ -100,9 +111,8 @@ def search_jobs():
         keywords_dict = extract_total_keywords(job_descriptions)
         if keywords_dict == {}:
             return render_template("no-keywords.html", job_title=job_title)
-    
 
-    session["num_of_jobs"] = job_descriptions[0]["descriptions"][-1]["index"]
+    session["num_of_jobs"] = len(job_descriptions)
     session["keywords_data"] = keywords_dict
 
     sorted_keywords_dict = dict(sorted(session["keywords_data"].items(), key=lambda item: item[1], reverse=True))
