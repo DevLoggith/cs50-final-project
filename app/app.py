@@ -48,8 +48,8 @@ def index():
 @check_for_data
 def list():
     session_data = session["keywords_data"]
-    sorted_keywords_dict = dict(
-        sorted(session_data.items(), key=lambda item: item[1], reverse=True)
+    sorted_keywords_dict = sorted(
+        session_data.items(), key=lambda item: item[1], reverse=True
     )
     return render_template(
         "list.html",
